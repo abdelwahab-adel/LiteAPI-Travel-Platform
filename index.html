@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ar" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LITEAPI.TRAVEL ELITE - بوابة النخبة للضيافة الفاخرة</title>
+    
+    <!-- Cairo & JetBrains Mono Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    fontSize: {
+                        'xs': '0.75rem',
+                        'sm': '13px',
+                        'base': '15px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- External stylesheet for any extra refinements -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="min-h-screen flex flex-col font-sans select-none antialiased transition-colors duration-500 bg-[#0b0f19] text-slate-100 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#111827] via-[#0b0f19] to-[#030712]">
+
+    <!-- 1. Booting cinematic loader -->
+    <div id="booting-loader" class="fixed inset-0 z-[100] bg-[#070a13] flex flex-col items-center justify-center text-center p-6 backdrop-blur-2xl transition-opacity duration-500">
+        <div class="relative mb-6">
+            <div class="w-16 h-16 rounded-full border-2 border-dashed border-amber-500 animate-spin" style="animation-duration: 4s;"></div>
+            <div class="absolute inset-2 rounded-full border border-yellow-500/30 animate-pulse"></div>
+        </div>
+        <h2 class="text-2xl font-black tracking-tight text-white font-sans">
+            LITEAPI.TRAVEL <span id="booting-title-badge" class="text-amber-500 font-light">ELITE</span>
+        </h2>
+        <p id="booting-loader-desc" class="text-slate-400 text-xs mt-2 max-w-sm tracking-wide">
+            جاري تأمين اتصال مشفر بالكامل وجلب الأسعار الفورية من خوادم لايت إيه بي آي بالتزامن...
+        </p>
+    </div>
+
+    <!-- 2. Top Promotional Marquee Ticker -->
+    <div class="bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-sans py-1.5 px-4 overflow-hidden text-xs font-black tracking-wide border-b border-amber-500/10 select-none z-30 shrink-0">
+        <div class="whitespace-nowrap flex items-center justify-center space-x-8 space-x-reverse min-w-full">
+            <span class="inline-flex items-center gap-1.5 select-none">
+                <i data-lucide="sparkles" class="w-4 h-4 animate-pulse"></i>
+                <span id="ticker-brand-text">بوابة النخبة للضيافة الملكية الفاخرة</span>
+            </span>
+            <span class="opacity-40">|</span>
+            <span id="ticker-promo-text">خصم فوري 20% لكود العضوية البلاتينية: ELITE20</span>
+            <span class="opacity-40">|</span>
+            <span id="ticker-status-text">مزامنة مباشرة كاملة مع بروتوكول LiteAPI</span>
+        </div>
+    </div>
+
+    <!-- 3. Navigation Bar -->
+    <nav id="app-navbar" class="sticky top-0 z-50 transition-all duration-500 border-b bg-[#0f172a]/65 backdrop-blur-xl border-amber-500/15 shadow-xl shadow-amber-950/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+                
+                <!-- Logo Brand Area -->
+                <div id="nav-logo" class="flex items-center space-x-3.5 space-x-reverse cursor-pointer group">
+                    <div class="p-2.5 rounded-xl text-white transition-all duration-300 relative bg-gradient-to-tr from-amber-500 to-yellow-600 shadow-md shadow-amber-500/15 group-hover:scale-105">
+                        <i data-lucide="compass" class="w-5.5 h-5.5 text-slate-950" style="animation: spin 24s linear infinite;"></i>
+                        <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-yellow-500"></span>
+                        </span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-sans font-extrabold text-xl tracking-tight text-white">
+                                LITEAPI<span class="text-amber-500 font-light">.TRAVEL</span>
+                            </span>
+                            <span class="text-[9px] px-1.5 py-0.5 rounded-md font-mono bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-widest font-extrabold select-none">Elite</span>
+                        </div>
+                        <span class="font-sans font-medium text-[10px] uppercase tracking-widest text-slate-400 block -mt-1 font-mono">
+                            Premium Hospitality Hub
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Centered Glass Switch Component -->
+                <div class="flex p-1 rounded-2xl border bg-slate-950/60 border-slate-800">
+                    <button id="nav-tab-portal" class="flex items-center space-x-1.5 space-x-reverse px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-extrabold shadow-lg shadow-amber-500/10">
+                        <i data-lucide="compass" class="w-4 h-4"></i>
+                        <span id="nav-portal-label">البوابة العامة</span>
+                    </button>
+                    <button id="nav-tab-member" class="flex items-center space-x-1.5 space-x-reverse px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer text-slate-400 hover:text-slate-200">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span id="nav-member-label">لوحة العضو</span>
+                    </button>
+                </div>
+
+                <!-- Right Action Widgets -->
+                <div class="flex items-center gap-4">
+                    <!-- API Success Gauge -->
+                    <div class="hidden lg:flex flex-col items-end border-l border-slate-800 pl-4">
+                        <span class="text-[10px] text-slate-450 font-mono tracking-wider uppercase select-none" id="label-liteapi-gateway">بوابة خوادم لايت إيه بي آي</span>
+                        <span class="text-xs font-mono font-bold flex items-center gap-1.5 mt-0.5 text-amber-400" id="label-gateway-stable">
+                            <i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse text-amber-400 shrink-0"></i>
+                            <span>مستقر ومؤمن 100%</span>
+                        </span>
+                    </div>
+
+                    <!-- Language Switcher -->
+                    <button id="btn-language-switcher" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer border bg-slate-900 border-slate-800 text-amber-400 hover:text-amber-300 hover:bg-slate-850">
+                        English
+                    </button>
+
+                    <!-- Theme Toggler (Dark/Light) -->
+                    <button id="btn-theme-toggler" class="p-2.5 rounded-xl transition border bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 cursor-pointer" title="Switch Theme">
+                        <i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
+                    </button>
+
+                    <!-- User Profile Hub -->
+                    <button id="btn-login-trigger" class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition bg-gradient-to-r from-amber-500/10 to-yellow-600/10 border border-amber-500/25 text-amber-400 hover:border-amber-500/40 select-none flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="award" class="w-4 h-4 text-amber-500"></i>
+                        <span id="label-profile-badge">العضوية الممتازة</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT WORKSPACES -->
+    <main class="flex-1 pb-16">
+        
+        <!-- ============================================== -->
+        <!-- VIEW A: USER EXPLORER PORTAL -->
+        <!-- ============================================== -->
+        <div id="view-portal" class="block">
+            
+            <!-- 1. Hero Showcase and Search Component -->
+            <section class="relative overflow-hidden pt-12 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto select-none">
+                <div class="text-center space-y-4 max-w-4xl mx-auto mb-10">
+                    <span id="hero-tag" class="inline-flex bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] uppercase font-black tracking-widest py-1 px-3.5 rounded-full">
+                        بوابة الضيافة الملكية الاستثنائية
+                    </span>
+                    <h1 id="hero-title" class="font-sans font-black text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight">
+                        احجز رحلتك الفاخرة بلمسة ذهبية بالغة الرقي
+                    </h1>
+                    <p id="hero-desc" class="text-xs sm:text-sm text-slate-350 leading-relaxed max-w-2xl mx-auto">
+                        بوابة فندقية ملكية مستقلة متزامنة مباشرة مع بروتوكولات LiteAPI Travel الفورية، مصممة بتجربة زجاجية غنية مستوحاة من Booking و Airbnb لتأمين حجز أسطوري مضمون بالملي ثانية.
+                    </p>
+                    
+                    <div class="pt-2 flex flex-wrap justify-center gap-2 text-[10px] text-slate-400 font-bold uppercase select-none">
+                        <span class="flex items-center gap-1 bg-slate-900/45 py-1 px-3.5 rounded-full border border-slate-800">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-amber-500"></i> <span id="hero-sticker-1">حجوزات معتمدة فوراً</span>
+                        </span>
+                        <span class="flex items-center gap-1 bg-slate-900/45 py-1 px-3.5 rounded-full border border-slate-800">
+                            <i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-500"></i> <span id="hero-sticker-2">حماية استرداد مضمونة</span>
+                        </span>
+                        <span class="flex items-center gap-1 bg-slate-900/45 py-1 px-3.5 rounded-full border border-slate-800">
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i> <span id="hero-sticker-3">مستويات 5 نجوم ملكية</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- The Grand Search Engine Gateway -->
+                <div class="p-6 sm:p-8 rounded-3xl border border-slate-800 bg-[#0f172a]/45 shadow-2xl backdrop-blur-md relative z-10">
+                    <div class="flex items-center gap-2 mb-6 border-b border-slate-800 pb-3">
+                        <i data-lucide="search" class="w-5 h-5 text-amber-500 animate-pulse"></i>
+                        <div>
+                            <h3 id="search-title" class="font-sans font-black text-sm text-white">استكشاف الغرف المتوفرة والأسعار المباشرة</h3>
+                            <p id="search-sub" class="text-[11px] text-slate-400 font-medium">أدخل تواريخك المفضلة للمزامنة الفورية مع خوادم LiteAPI الفعالة.</p>
+                        </div>
+                    </div>
+
+                    <form id="search-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <!-- Country -->
+                        <div class="space-y-1.5 text-right">
+                            <label id="label-country" class="text-[10px] font-bold text-slate-400 block">الدولة الشريكة</label>
+                            <div class="relative">
+                                <i data-lucide="globe" class="w-4 h-4 text-slate-500 absolute top-3.5 right-3.5 pointer-events-none"></i>
+                                <select id="search-country" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none appearance-none cursor-pointer">
+                                    <option value="AE">United Arab Emirates (AE)</option>
+                                    <option value="EG">Egypt (EG)</option>
+                                    <option value="JP">Japan (JP)</option>
+                                    <option value="US">United States (US)</option>
+                                    <option value="FR">France (FR)</option>
+                                    <option value="GB">United Kingdom (GB)</option>
+                                    <option value="IT">Italy (IT)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- City -->
+                        <div class="space-y-1.5 text-right">
+                            <label id="label-city" class="text-[10px] font-bold text-slate-400 block">المدينة المستهدفة</label>
+                            <div class="relative">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-500 absolute top-3.5 right-3.5 pointer-events-none"></i>
+                                <select id="search-city" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none appearance-none cursor-pointer">
+                                    <option value="">جميع الدول الشريكة</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Check-in -->
+                        <div class="space-y-1.5 text-right">
+                            <label id="label-checkin" class="text-[10px] font-bold text-slate-400 block">موعد النزول</label>
+                            <div class="relative">
+                                <i data-lucide="calendar" class="w-4 h-4 text-slate-500 absolute top-3.5 right-3.5 pointer-events-none"></i>
+                                <input type="date" id="search-checkin" value="2026-06-15" class="w-full pr-10 pl-4 py-2.5 rounded-xl text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <!-- Check-out -->
+                        <div class="space-y-1.5 text-right">
+                            <label id="label-checkout" class="text-[10px] font-bold text-slate-400 block">موعد المغادرة</label>
+                            <div class="relative">
+                                <i data-lucide="calendar" class="w-4 h-4 text-slate-500 absolute top-3.5 right-3.5 pointer-events-none"></i>
+                                <input type="date" id="search-checkout" value="2026-06-20" class="w-full pr-10 pl-4 py-2.5 rounded-xl text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <!-- Guests -->
+                        <div class="space-y-1.5 text-right flex flex-col justify-end">
+                            <button type="submit" id="search-submit-btn" class="w-full py-3 rounded-xl text-xs font-black tracking-widest bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 flex items-center justify-center space-x-2 space-x-reverse cursor-pointer shadow-lg active:scale-95 transition select-none">
+                                <i data-lucide="sparkles" class="w-4 h-4 shrink-0"></i>
+                                <span id="search-submit-label">الأسعار الفورية</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Golden Destination Badges -->
+                <div class="mt-8 text-center space-y-3 select-none">
+                    <h4 id="geo-title" class="font-sans font-black text-xs text-amber-500 uppercase tracking-widest">الوجهات الملكية الموصى بها للتصفح السريع</h4>
+                    <p id="geo-sub" class="text-[11px] text-slate-400">اضغط على أي رمز جغرافي أدناه لمزامنة خريطة الـ API وتحميل صروحها فوراً.</p>
+                    <div id="recommended-badges" class="flex flex-wrap justify-center gap-2 pt-1.5">
+                        <button data-city-preset="Dubai" data-country-preset="AE" class="py-2 px-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-amber-500/30 hover:text-amber-450 transition text-xs font-bold text-slate-300 cursor-pointer flex items-center gap-1.5 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> دبي (UAE)
+                        </button>
+                        <button data-city-preset="Cairo" data-country-preset="EG" class="py-2 px-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-amber-500/30 hover:text-amber-450 transition text-xs font-bold text-slate-300 cursor-pointer flex items-center gap-1.5 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> القاهرة (Egypt)
+                        </button>
+                        <button data-city-preset="Tokyo" data-country-preset="JP" class="py-2 px-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-amber-500/30 hover:text-amber-450 transition text-xs font-bold text-slate-300 cursor-pointer flex items-center gap-1.5 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> طوكيو (Japan)
+                        </button>
+                        <button data-city-preset="New York" data-country-preset="US" class="py-2 px-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-amber-500/30 hover:text-amber-450 transition text-xs font-bold text-slate-300 cursor-pointer flex items-center gap-1.5 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> نيويورك (US)
+                        </button>
+                        <button data-city-preset="London" data-country-preset="GB" class="py-2 px-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-amber-500/30 hover:text-amber-450 transition text-xs font-bold text-slate-300 cursor-pointer flex items-center gap-1.5 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> لندن (UK)
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Active Wishlist Showroom (Appears when hoped estates are set) -->
+            <section id="wishlist-showroom-section" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 mt-4">
+                <div class="p-6 rounded-3xl border border-dashed border-amber-500/20 bg-amber-500/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="flex items-center gap-3 text-right">
+                        <div class="w-10 h-10 bg-amber-505/10 rounded-xl border border-amber-500/25 flex items-center justify-center shrink-0">
+                            <i data-lucide="heart" class="w-5 h-5 text-amber-500 fill-amber-500"></i>
+                        </div>
+                        <div>
+                            <h4 id="wishline-title" class="text-xs font-black uppercase text-amber-500 tracking-wider">المفضلة الملكية الفاخرة النشطة</h4>
+                            <p id="wishline-desc" class="text-[11px] text-slate-400">لقد حفظت صروح الإقامة هذه في رصيد المعاينة. جاهزة للمقارنة أو الحجز الفوري في أي ليلة.</p>
+                        </div>
+                    </div>
+                    <button id="btn-wishlist-filter-shortcut" class="px-5 py-2.5 rounded-xl text-xs font-black border border-amber-500/30 text-amber-400 bg-slate-950/60 hover:bg-slate-950 transition flex items-center gap-1.5">
+                        <i data-lucide="eye" class="w-4 h-4"></i> عرض المفضلة الملكية
+                    </button>
+                </div>
+            </section>
+
+            <!-- 3. Curated Filters, Listings & Sidebar Specs Layout -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 select-none">
+                
+                <!-- Category Tabs matrix -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/60 pb-4 mb-8">
+                    <div class="flex flex-wrap gap-2" id="filter-tabs-container">
+                        <button data-cat="all" class="px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer border border-amber-500/10 bg-slate-900 border-amber-500/10 text-amber-400">جميع الصروح</button>
+                        <button data-cat="luxury" class="px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer border border-transparent text-slate-400 hover:text-slate-200">صروح برستيج</button>
+                        <button data-cat="top_rated" class="px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer border border-transparent text-slate-400 hover:text-slate-200">الأعلى تصفية</button>
+                        <button data-cat="best_price" class="px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer border border-transparent text-slate-400 hover:text-slate-200">الأقل قيمة</button>
+                        <button data-cat="most_booked" class="px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer border border-transparent text-slate-400 hover:text-slate-200">الأكثر حجزاً</button>
+                        <button data-cat="wishlist" class="px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1"><i data-lucide="heart" class="w-3 h-3 text-rose-500 fill-rose-500"></i> المفضلة</button>
+                    </div>
+
+                    <div class="text-right">
+                        <span id="hotels-count-label" class="text-xs text-slate-450 font-bold block">0 فندق شريك يطابق شروط الفلترة</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- LEFT COLUMN: Grid of Hotel Cases (9 columns) -->
+                    <div class="lg:col-span-8 space-y-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-1.5 h-6 bg-amber-550 rounded-full block"></span>
+                            <h2 id="avail-hotels-title" class="font-sans font-black text-lg text-white">صروح الضيافة والمنتجعات الاستثنائية المتاحة</h2>
+                        </div>
+                        <p id="avail-hotels-sub" class="text-xs text-slate-450 mb-6 -mt-4">غرف شاغرة مدعومة مباشرة، مرتبة ومجهزة بخصومات بلاتينية خاصة.</p>
+                        
+                        <!-- Main Hotel Cards container -->
+                        <div id="hotels-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Injected dynamically via app.js -->
+                        </div>
+
+                        <!-- Empty state fallback -->
+                        <div id="hotels-empty-state" class="hidden p-12 rounded-3xl border border-dashed border-slate-800 text-center bg-slate-950/20 max-w-xl mx-auto">
+                            <i data-lucide="compass" class="w-12 h-12 text-slate-600 mx-auto mb-4 animate-bounce"></i>
+                            <h3 id="empty-title" class="font-sans font-bold text-base text-white mb-2">لا توجد فنادق شاغرة مطابقة حالياً</h3>
+                            <p id="empty-sub" class="text-xs text-slate-450 leading-relaxed">لم نجد صروح متوافقة. يرجى إعادة تعيين خيار الفلترة أو التواريخ أو اختيار إحدى الوجهات الموصى بها بالأعلى للاستكشاف.</p>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Geolocation Spatial Tracker & Interactive map (4 columns) -->
+                    <aside class="lg:col-span-4 space-y-6">
+                        <div class="p-6 rounded-3xl border border-slate-800 bg-slate-950/45 text-right space-y-4 shadow-xl">
+                            <div class="flex items-center gap-2 border-b border-slate-850 pb-3">
+                                <i data-lucide="compass" class="w-5 h-5 text-amber-500 animate-spin-slow"></i>
+                                <h3 id="map-label-title" class="font-sans font-black text-xs uppercase text-amber-500 tracking-wider">الرصد الجغرافي وخارطة الصروح الذكية</h3>
+                            </div>
+                            <p id="map-label-desc" class="text-[11px] text-slate-400 leading-relaxed font-semibold">تخطيط فوري لجميع فنادق دبي، طوكيو، والقاهرة على إحداثيات محددة. اضغط على الدوائر للمعاينة.</p>
+                            
+                            <!-- SVG-based Map Container -->
+                            <div class="relative w-full aspect-square border border-slate-850 rounded-2xl bg-slate-950/80 overflow-hidden flex items-center justify-center p-2 group">
+                                <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+                                
+                                <svg id="interactive-map-svg" viewBox="0 0 400 400" class="w-full h-full relative z-10 transition-transform duration-300">
+                                    <!-- Map coordinate paths and circles will be injected here -->
+                                </svg>
+
+                                <!-- Active Pin Bubble card overlay inside map element -->
+                                <div id="map-popover" class="absolute bottom-4 inset-x-4 bg-[#0f172a] border border-amber-500/25 p-3 rounded-2xl shadow-2xl scale-0 transform transition-transform duration-300 text-right space-y-1.5 z-25">
+                                    <div class="flex justify-between items-start gap-2">
+                                        <button id="map-popover-close" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                                        <span id="map-popover-tag" class="bg-amber-500/15 text-amber-400 text-[8px] font-mono tracking-widest uppercase px-2 py-0.5 rounded leading-none font-black">ACTIVE NODE</span>
+                                    </div>
+                                    <h5 id="map-popover-name" class="font-sans font-black text-xs text-white leading-tight">Palace Downtown Dubai</h5>
+                                    <p id="map-popover-desc" class="text-[10px] text-slate-400 truncate leading-none">Sheikh Mohammed Blvd, Giza ...</p>
+                                    <div class="flex justify-between items-center border-t border-slate-850/80 pt-1.5 mt-1">
+                                        <span id="map-popover-price" class="text-amber-500 font-bold text-xs">$380 / ليلة</span>
+                                        <button id="map-popover-btn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-[10px] font-black py-1 px-3.5 rounded-lg active:scale-95 transition">عرض وتأكيد الاجنحة</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Special Elite VIP Card Box -->
+                        <div class="p-6 rounded-3xl bg-gradient-to-br from-indigo-950/20 via-slate-900 to-black/30 border border-slate-800 text-right space-y-4">
+                            <div class="w-10 h-10 bg-amber-500/10 border border-amber-505/20 rounded-full flex items-center justify-center mb-1">
+                                <i data-lucide="shield-check" class="text-amber-500 w-5 h-5"></i>
+                            </div>
+                            <h4 id="shield-box-title" class="font-sans font-black text-xs tracking-wider text-white">ضمان قسائم الحجز الآمن</h4>
+                            <p id="shield-box-desc" class="text-[11px] text-slate-450 leading-relaxed font-semibold">
+                                جميع العمليات مؤمنة بالتشفير البنكي الكامل ومحمية بالدخول المشفر لضمان غرفك الفندقية بملايين المعاملات بالتكامل مع LiteAPI Travel.
+                            </p>
+                        </div>
+                    </aside>
+
+                </div>
+            </section>
+
+            <!-- 4. Elite Hotel Comparison Workspace (Drawer compare center modal) -->
+            <section id="compare-workspace" class="fixed bottom-6 inset-x-6 z-40 scale-0 transform transition-all duration-300 origin-bottom select-none">
+                <div class="max-w-4xl mx-auto rounded-3xl border border-amber-500/20 bg-slate-950/95 shadow-2xl shadow-yellow-950/15 backdrop-blur-md p-5 text-right space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <button id="compare-workspace-close" class="p-1 px-3 bg-slate-900 border border-slate-800 hover:text-white rounded-xl text-xs text-slate-400 cursor-pointer">تصغير الجدول</button>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="columns" class="w-4 h-4 text-amber-500"></i>
+                            <h4 id="compare-title" class="font-sans font-black text-sm text-amber-500">منظومة وتفريد مقارنة الفنادق والصروح الفاخرة المضافة</h4>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table id="compare-table" class="w-full text-xs text-slate-200 border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-800/80 text-amber-400 text-right">
+                                    <th class="py-2.5 px-4 font-normal">الميزة / الصرح</th>
+                                    <!-- Dynamic headers mapped -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic rows for names, stats, star, amenities, prices, buttons -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW B: PROFILE / MEMBER TRAVEL DESK -->
+        <!-- ============================================== -->
+        <div id="view-member" class="hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                
+                <!-- Master Layout Split: Left Loyal panel info (4 cols), Right Bookings histories columns -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start select-none">
+                    
+                    <!-- Left Sidebar Widget: Platinum Loyal and stats -->
+                    <div class="lg:col-span-4 space-y-6">
+                        <!-- Loyalty Premium Pass representation card -->
+                        <div class="p-6 rounded-3xl bg-gradient-to-tr from-stone-900 via-[#1e293b] to-[#475569] border border-amber-500/20 text-white relative overflow-hidden shadow-2xl shadow-slate-950/30">
+                            <!-- Premium overlay auras -->
+                            <div class="absolute -top-10 -left-10 w-44 h-44 rounded-full bg-amber-500/15 blur-2xl"></div>
+                            
+                            <div class="relative z-10 space-y-6">
+                                <div class="flex justify-between items-start">
+                                    <i data-lucide="compass" class="w-8 h-8 text-amber-500 animate-spin-slow" style="animation-duration: 40s;"></i>
+                                    <span id="loyalty-tag" class="bg-amber-500 text-slate-950 text-[9px] font-black uppercase tracking-widest py-1 px-3.5 rounded-md shadow-md">الملكية النخبة</span>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <h4 class="font-sans font-black text-base tracking-wide" id="global-login-name">ABDELWAHAB ADEL</h4>
+                                    <span class="text-[10px] text-slate-350 block font-mono" id="loyalty-card-no">رقم العضوية: 5501 2291 9904</span>
+                                </div>
+
+                                <div class="space-y-2 border-t border-slate-700/50 pt-4">
+                                    <div class="flex justify-between items-center">
+                                        <span id="fidelity-points" class="font-sans font-black text-amber-400 text-sm">12,400 نقطة فندقية</span>
+                                        <span class="text-[9px] text-slate-300 font-semibold">Tiers Status: Active</span>
+                                    </div>
+                                    <!-- Progress line bar -->
+                                    <div class="w-full h-1.5 rounded-full bg-slate-950/50 overflow-hidden">
+                                        <div class="w-[82%] h-full bg-gradient-to-r from-amber-500 to-yellow-600"></div>
+                                    </div>
+                                    <span id="fidelity-target" class="text-[9px] text-[#e2e8f0] block">متبقي 2,600 نقطة فقط للترقية الفورية لمستوى الماسي النخبة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Plate -->
+                        <div class="p-6 rounded-3xl border border-slate-800 bg-[#0f172a]/45 space-y-4">
+                            <h4 id="stats-tag" class="font-sans font-black text-xs text-amber-500 uppercase tracking-widest border-b border-slate-850 pb-2">إحصاءات الإقامة والنشاط</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-slate-950/60 rounded-2xl border border-slate-850 text-right space-y-1">
+                                    <span class="text-slate-450 text-[10px] font-black uppercase" id="label-num-trips">إجمالي الرحلات</span>
+                                    <span class="text-white text-lg font-black block" id="stats-trips-count">2 رحلة</span>
+                                </div>
+                                <div class="p-4 bg-slate-950/60 rounded-2xl border border-slate-850 text-right space-y-1">
+                                    <span class="text-slate-450 text-[10px] font-black uppercase" id="label-num-nights">الليالي المحجوزة</span>
+                                    <span class="text-white text-lg font-black block" id="stats-nights-count">8 ليالٍ</span>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-slate-450 leading-relaxed font-semibold italic text-right" id="loyalty-note">تدرج وتضاف نقاط العضوية ومكافآت الاسترداد فوراً عند إجراء Check-In في الفندق المعتمد.</p>
+                        </div>
+
+                        <!-- Saved Destinations shortcuts -->
+                        <div class="p-6 rounded-3xl border border-slate-800 bg-[#0f172a]/45 space-y-4 text-right">
+                            <h4 id="saved-title-label" class="font-sans font-black text-xs text-amber-500 uppercase tracking-widest border-b border-slate-850 pb-2">الوجهات المفضلة المحفوظة</h4>
+                            <div class="space-y-3" id="saved-favorites-sidebar-list">
+                                <!-- Triggers fallback items or mapped wishlists items -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Main Work: Dynamic listings of reservations and printable invoice pass -->
+                    <div class="lg:col-span-8 space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                            <div class="text-right">
+                                <div class="flex items-center gap-2 mb-1 justify-end">
+                                    <span class="w-1.5 h-6 bg-amber-550 rounded-full block"></span>
+                                    <h2 id="records-title" class="font-sans font-black text-lg text-white">سجل ومعاينة تذاكر الحجوزات</h2>
+                                </div>
+                                <p id="records-sub" class="text-xs text-slate-450">عرض وطباعة سند الحجز الفوري، الاستردادات، وإصدار فواتير القيمة المضافة لجميع الفنادق.</p>
+                            </div>
+
+                            <button id="btn-sync-bookings" class="px-5 py-2.5 rounded-xl text-xs font-black bg-slate-950 border border-slate-850 hover:border-amber-500/20 text-slate-300 transition cursor-pointer flex items-center gap-1.5">
+                                <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-amber-500"></i> <span id="label-refresh-records">تحديث السجل من القنوات</span>
+                            </button>
+                        </div>
+
+                        <!-- Bookings contracts List container -->
+                        <div id="bookings-history-list" class="space-y-4 text-right">
+                            <!-- Booking components will be injected dynamically -->
+                        </div>
+
+                        <!-- Fallback empty booking log -->
+                        <div id="bookings-empty-state" class="hidden p-8 sm:p-12 rounded-3xl border border-dashed border-slate-800 text-center bg-slate-950/20 max-w-xl mx-auto select-none">
+                            <i data-lucide="calendar" class="w-10 h-10 text-slate-600 mx-auto mb-4 animate-pulse"></i>
+                            <h4 id="no-bookings-title" class="font-sans font-bold text-base text-white mb-2">لا توجد حركات حجز مسجلة بنزعك</h4>
+                            <p id="no-bookings-sub" class="text-xs text-slate-450 leading-relaxed max-w-sm mx-auto">تصفح البوابة الفندقية العامة لتفعيل مسارات الفنادق واستعلام المعروض المباشر وتجربة إطلاق معاملة حجز حقيقية.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT D: DETAILED HOTEL IMPERSIVE MODAL -->
+    <!-- ============================================== -->
+    <div id="hotel-details-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div id="details-backdrop" class="min-h-screen bg-slate-950/80 backdrop-blur-md flex flex-col justify-end">
+            <!-- Modal Body content layout transition -->
+            <div id="details-modal-box" class="min-h-screen w-full flex flex-col relative text-right bg-[#090d16] text-slate-100">
+                
+                <!-- Grand Panoramic Image Banner of hotel details -->
+                <div class="relative h-[45vh] sm:h-[55vh] w-full overflow-hidden select-none shrink-0 border-b border-slate-900">
+                    <img id="details-hero-img" src="" alt="Hotel detailed image" class="w-full h-full object-cover">
+                    <!-- Linear cinematic shades -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-[#090d16]/30 to-black/40"></div>
+
+                    <!-- Close & secondary commands floating container -->
+                    <div class="absolute top-6 inset-x-6 flex justify-between items-start z-20">
+                        <button id="btn-close-details" class="p-3 bg-slate-950/70 hover:bg-slate-900 border border-white/10 text-white rounded-full pointer-events-auto cursor-pointer transition shadow-xl hover:scale-105 active:scale-95">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+
+                        <div class="flex gap-2">
+                            <button id="btn-fullscreen-gallery" class="bg-slate-950/70 border border-white/10 hover:border-amber-500/35 text-white px-4 py-2 rounded-xl text-xs flex items-center gap-2 transition hover:scale-105">
+                                <i data-lucide="eye" class="w-4 h-4 text-amber-500"></i> <span id="label-fsgallery-trigger">المعرض الغامر للشاشة</span>
+                            </button>
+                            <button id="btn-share-trigger" class="p-2.5 bg-slate-950/70 border border-white/10 text-white rounded-xl hover:text-amber-400 transition hover:scale-105">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ambient labels centered title at absolute bottom -->
+                    <div class="absolute bottom-8 inset-x-6 sm:inset-x-12 flex flex-col justify-end text-white z-15">
+                        <span id="details-city-country-badge" class="text-[10px] tracking-widest text-amber-400 font-black uppercase mb-1.5 flex items-center gap-1.5 justify-end">
+                            <span class="w-2 h-2 rounded-full bg-amber-500 inline-block animate-pulse"></span>
+                            <span>Dubai, UAE</span>
+                        </span>
+                        <h3 id="details-hotel-name-h3" class="font-sans font-black text-2xl sm:text-4xl lg:text-5xl mt-1 tracking-tight max-w-3xl drop-shadow-xl">
+                            The Palace Downtown Dubai
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Main Contents Matrix Grid layout -->
+                <div class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 md:py-14 z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 text-right">
+                        
+                        <!-- Left Specs Block (Main values description, amenities lists, Available Vacancy cards) (8 cols) -->
+                        <div class="lg:col-span-8 space-y-10">
+                            <!-- Description board -->
+                            <div class="p-6 sm:p-8 rounded-3xl border bg-slate-950/40 border-slate-800/80">
+                                <h4 id="label-philosophy-curator" class="font-sans font-black text-xs text-amber-500 uppercase tracking-widest mb-3">رؤية المنصة الفلسفية للصرح الفندقي</h4>
+                                <p id="details-description" class="text-sm sm:text-base leading-relaxed text-slate-300">
+                                    Set in a traditional palatial residence, this luxury hotel overlooks Dubai Fountain and Burj Khalifa...
+                                </p>
+                            </div>
+
+                            <!-- Amenity matrix list -->
+                            <div>
+                                <h4 id="details-amenities-label" class="font-sans font-black text-xs text-amber-500 uppercase tracking-widest mb-4">الامتيازات والمرافق المشمولة بالمنتجع الملكي</h4>
+                                <div id="details-amenities-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                    <!-- Dynamic elements injected -->
+                                </div>
+                            </div>
+
+                            <!-- Room rates vacancy elements -->
+                            <div class="pt-2">
+                                <h4 class="font-sans font-black text-sm text-yellow-500 uppercase tracking-widest mb-4 border-b border-slate-800/60 pb-2 flex items-center justify-between">
+                                    <span id="label-live-vacancies-period">خيارات الأجنحة والغرف الشاغرة المتوفرة حالياً بالمنصة</span>
+                                    <span id="details-booking-schedule-tag" class="text-[10px] font-mono tracking-normal text-slate-405 normal-case font-medium">(2026-06-15 - 2026-06-20)</span>
+                                </h4>
+
+                                <!-- Rates empty checker element -->
+                                <div id="details-rates-pending" class="hidden p-8 sm:p-12 rounded-3xl border text-center bg-slate-950/30 border-slate-850">
+                                    <i data-lucide="calendar" class="w-10 h-10 text-amber-500 mx-auto mb-4 animate-pulse"></i>
+                                    <h5 class="font-sans font-black text-sm text-white mb-2" id="label-rates-unlocked-title">أسعار التواريخ معلقة</h5>
+                                    <p class="text-xs text-slate-450 mb-6 max-w-sm mx-auto leading-relaxed" id="label-rates-unlocked-sub">يرجى الضغط على زر الاستعلام بالأعلى لتشغيل Endpoints ومزامنة الغرف والأسعار حالياً.</p>
+                                    <button id="btn-details-trigger-ratesearch" class="bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 text-xs font-black py-3 px-8 rounded-xl cursor-pointer shadow-lg active:scale-95 transition">
+                                        تفعيل التسعير الفوري بالمنصة
+                                    </button>
+                                </div>
+
+                                <!-- Dynamic rates listing grid list -->
+                                <div id="details-room-rates-list" class="space-y-4">
+                                    <!-- Injected active accommodation rates -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Specs layout (Geographic metadata logs, Sovereign awards, VIP badges) (4 cols) -->
+                        <div class="lg:col-span-4 space-y-6">
+                            
+                            <!-- Static metadata box -->
+                            <div class="p-6 rounded-3xl border bg-[#0f172a] border-slate-800/80 shadow-2xl space-y-5 text-right">
+                                <h4 id="label-spec-qualities" class="font-sans font-black text-xs text-amber-500 uppercase tracking-widest border-b border-slate-800/60 pb-2">تقييم الجودة والتصنيف الفني</h4>
+                                
+                                <div class="flex items-center gap-3 justify-end">
+                                    <div class="text-right">
+                                        <span id="label-exclusive-score" class="block text-[9px] uppercase font-black text-slate-450">نقاط الجودة الحصرية</span>
+                                        <span id="details-stars-rating" class="text-base font-black text-white">4.8 / 5.0</span>
+                                    </div>
+                                    <div class="w-12 h-12 bg-amber-500/10 border border-amber-550/25 rounded-2xl flex items-center justify-center shrink-0">
+                                        <i data-lucide="star" class="w-6 h-6 text-amber-500 fill-amber-500"></i>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 justify-end">
+                                    <div class="text-right">
+                                        <span id="label-lat-coords" class="block text-[9px] uppercase font-black text-slate-450">الإحداثي الشمالي Lat</span>
+                                        <span id="details-lat" class="text-xs font-mono font-bold text-slate-300">25.1952</span>
+                                    </div>
+                                    <div class="w-12 h-12 bg-indigo-500/10 border border-indigo-505/20 rounded-2xl flex items-center justify-center shrink-0">
+                                        <i data-lucide="map-pin" class="w-5 h-5 text-indigo-400"></i>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 justify-end">
+                                    <div class="text-right">
+                                        <span id="label-lng-coords" class="block text-[9px] uppercase font-black text-slate-450">الإحداثي الشرقي Lng</span>
+                                        <span id="details-lng" class="text-xs font-mono font-bold text-slate-300">55.2755</span>
+                                    </div>
+                                    <div class="w-12 h-12 bg-emerald-500/10 border border-emerald-505/20 rounded-2xl flex items-center justify-center shrink-0">
+                                        <i data-lucide="compass" class="w-5 h-5 text-emerald-400" style="animation: spin 24s linear infinite;"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Exclusive Sovereign Seal -->
+                            <div class="p-6 rounded-3xl border border-dashed text-right bg-slate-950/20 border-slate-800 space-y-3">
+                                <div class="w-10 h-10 bg-amber-500/10 border border-amber-505/20 rounded-full flex items-center justify-center mb-1">
+                                    <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
+                                </div>
+                                <h4 id="label-privilege-seal-title" class="font-sans font-black text-xs text-white">ضمان الامتياز السيادي</h4>
+                                <p id="label-privilege-seal-desc" class="text-[11px] text-slate-450 leading-relaxed font-semibold">تضمن لك المنصة أفضل عروض الأسعار المسحوبة من نظام الحجز الفوري مع ميزات حجز آمنة تلغي هامش الأخطاء الفنية التقليدية.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT E: PASSENGER BOOKING DRAWER FORM -->
+    <!-- ============================================== -->
+    <div id="booking-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="w-full max-w-4xl bg-[#0f172a] border border-amber-500/15 rounded-3xl overflow-hidden shadow-2xl relative text-right">
+                
+                <div class="p-6 border-b border-slate-800 flex justify-between items-center sm:p-8">
+                    <button id="btn-close-booking-modal" class="p-2.5 rounded-xl bg-slate-950/50 hover:bg-slate-950 border border-slate-850 hover:text-white text-slate-400 cursor-pointer"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    <div>
+                        <h3 id="wizard-title" class="font-sans font-black text-sm text-amber-500">توثيق بيانات النزلاء وتأمين الحجز السريع</h3>
+                        <p id="wizard-sub" class="text-[11px] text-slate-450">أدخل الهوية والتفاصيل المالية لإجراء الحجز اللحظي عبر خوادم LiteAPI.</p>
+                    </div>
+                </div>
+
+                <form id="booking-payment-form" class="p-6 sm:p-8 space-y-8 select-none">
+                    
+                    <!-- Form Split: Guest (1) & Financial details credit components (2) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start text-right">
+                        
+                        <!-- Col 1: Passenger Contacts -->
+                        <div class="space-y-5">
+                            <h4 id="label-guest-profile-title" class="font-sans font-black text-xs text-amber-500 border-b border-slate-805 pb-1">1. تفاصيل النزيل ومسؤول الاتصال</h4>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1 text-right">
+                                    <label id="label-firstname" class="text-[10px] font-bold text-slate-400 block">الاسم الأول (إنجليزية كما بجواز السفر)</label>
+                                    <input type="text" id="booking-firstname" required placeholder="Abdelwahab" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                                </div>
+                                <div class="space-y-1 text-right">
+                                    <label id="label-lastname" class="text-[10px] font-bold text-slate-400 block">الاسم الأخير للعائلة (إنجليزية)</label>
+                                    <input type="text" id="booking-lastname" required placeholder="Adel" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1 text-right">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span id="email-validation-feedback" class="text-[9px] font-bold text-rose-500 hidden animate-pulse">تنسيق البريد غير صحيح</span>
+                                    <label id="label-booking-email" class="text-[10px] font-bold text-slate-400">البريد الإلكتروني المعتمد لتسليم القسيمة</label>
+                                </div>
+                                <input type="email" id="booking-email" required placeholder="user@elite-vip.com" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                            </div>
+
+                            <div class="space-y-1 text-right">
+                                <label id="label-booking-phone" class="text-[10px] font-bold text-slate-400 block">رقم هاتف الجوال الموثق</label>
+                                <input type="tel" id="booking-phone" required placeholder="+971 50 123 4567" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <!-- Col 2: Secured Credit settlement components -->
+                        <div class="space-y-5">
+                            <h4 id="label-billing-profile-title" class="font-sans font-black text-xs text-amber-500 border-b border-slate-805 pb-1">2. تفويض الائتمان والتمويل المضمون</h4>
+                            
+                            <!-- Credit Card representation visual graphics -->
+                            <div class="p-5 rounded-2xl bg-gradient-to-tr from-[#1e293b] via-indigo-950 to-[#0f172a] border border-amber-500/15 relative overflow-hidden text-right shadow-lg text-white">
+                                <div class="absolute -bottom-10 -right-10 w-28 h-28 rounded-full bg-amber-550/10 blur-xl"></div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <i data-lucide="credit-card" class="w-8 h-8 text-amber-500"></i>
+                                    <span class="text-[8px] tracking-widest bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded uppercase font-black">Elite Authorized Card</span>
+                                </div>
+                                <div class="space-y-4">
+                                    <h5 id="cc-visual-number" class="font-mono text-sm sm:text-base text-center tracking-widest text-slate-100">•••• •••• •••• ••••</h5>
+                                    
+                                    <div class="flex justify-between items-center text-xs text-slate-400 border-t border-slate-800/80 pt-2 font-semibold">
+                                        <div>
+                                            <span class="text-[7px] text-slate-500 block">CVV</span>
+                                            <span id="cc-visual-cvv" class="text-[10px] font-bold text-slate-200 block mt-1 leading-none">•••</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-[7px] text-slate-500 block">EXPIRY</span>
+                                            <span id="cc-visual-expiry" class="text-[10px] font-bold text-slate-205 block mt-0.5 font-mono">••/••</span>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-[7px] text-slate-500 block">CARDHOLDER</span>
+                                            <span id="cc-visual-name" class="text-[10px] font-bold text-white block mt-0.5 truncate max-w-[140px]">Guest Noble Name</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="space-y-1 text-right">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span id="cc-validation-feedback" class="text-[9px] font-bold text-rose-500 hidden">رقم البطاقة غير صحيح (Luhn Fail)</span>
+                                        <label id="label-cardnumber" class="text-[10px] font-bold text-slate-400">رقم بطاقة الائتمان (أمان معتمد)</label>
+                                    </div>
+                                    <input type="text" id="booking-cardnumber" required placeholder="4242 5501 0291 9904" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 font-mono text-center text-slate-100 focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="space-y-1 text-right">
+                                        <label id="label-cardexpiry" class="text-[10px] font-bold text-slate-400 block">تاريخ انتهاء البطاقة (MM/YY)</label>
+                                        <input type="text" id="booking-cardexpiry" required placeholder="12/28" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                                    </div>
+                                    <div class="space-y-1 text-right">
+                                        <label id="label-cardcvv" class="text-[10px] font-bold text-slate-400 block">رمز الضمان CVV</label>
+                                        <input type="text" id="booking-cardcvv" required placeholder="382" class="w-full rounded-xl p-3 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none focus:border-amber-500">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Selected rate brief invoice row summary info -->
+                    <div id="booking-selected-summary-panel" class="p-5 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-right flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div class="space-y-1">
+                            <span id="booking-summary-hotel-tag" class="text-[10px] text-amber-500 font-black uppercase tracking-wider block">جاري حجز: Atlantis The Royal</span>
+                            <h5 id="booking-summary-room-type" class="text-white text-xs font-black">Signature Panoramic Suite</h5>
+                            <p id="booking-summary-dates" class="text-slate-400 text-[11px] font-semibold">تاريخ النزول: 2026-06-15 إلى مغادرة: 2026-06-20 (5 ليالي)</p>
+                        </div>
+                        <div class="text-right">
+                            <span id="label-gross-total" class="text-[9px] text-[#94a3b8] block leading-none select-none">المستخلص المالي المدفوع</span>
+                            <span id="booking-summary-total-cost" class="text-amber-400 font-black text-xl sm:text-2xl mt-1 block leading-none">$3250 USD</span>
+                            <span class="text-[8px] text-slate-500 block mt-1" id="booking-summary-inclusive-note">شامل ضريبة القيمة المضافة ورسوم الخدمة</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit-booking" class="w-full h-12 rounded-xl text-xs font-black tracking-widest bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 hover:from-amber-400 hover:to-yellow-500 flex items-center justify-center space-x-2 space-x-reverse cursor-pointer font-sans shadow-xl active:scale-95 transition-all text-center">
+                        <i data-lucide="sparkles" class="w-4 h-4 shrink-0"></i>
+                        <span id="booking-btn-submit-label">تأكيد تفويض الحجز المضمون بالمنصة</span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT F: DETAILED INVOICE / VOUCHER VIEW -->
+    <!-- ============================================== -->
+    <div id="voucher-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="w-full max-w-3xl bg-white text-slate-900 rounded-3xl overflow-hidden shadow-2xl relative text-right printable-box">
+                <!-- Close floating visual triggers (hidden in printing) -->
+                <div class="absolute top-4 left-4 flex gap-2 no-print z-10">
+                    <button id="btn-print-voucher" class="p-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl text-slate-700 cursor-pointer" title="Print document">
+                        <i data-lucide="printer" class="w-4 h-4 text-amber-600"></i>
+                    </button>
+                    <button id="btn-close-voucher" class="p-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl text-slate-700 cursor-pointer" title="Close">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Print Sheet header and body structure -->
+                <div class="p-6 sm:p-10 space-y-8 select-all">
+                    <!-- Brand Plate -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-6">
+                        <div class="text-right">
+                            <span id="invoice-status-badge" class="inline-flex bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-[10px] px-3 py-1 rounded-full font-bold select-none leading-none items-center gap-1">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> <span id="voucher-paid-status">مدفوع ومؤكد كلياً بمخزون LiteAPI المباشر</span>
+                            </span>
+                            <h3 id="voucher-document-title" class="font-sans font-black text-sm text-slate-400 mt-2">سند قيد وإثبات حجز الغرفة الفندقية - VOUCHER</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div>
+                                <h4 class="font-extrabold text-slate-900 text-lg leading-none">LITEAPI.TRAVEL</h4>
+                                <span class="text-[9px] uppercase tracking-widest font-mono text-slate-505 block mt-0.5">ELITE VERIFIED ACQUISITION</span>
+                            </div>
+                            <div class="p-2 bg-slate-100 rounded-lg">
+                                <i data-lucide="compass" class="w-6 h-6 text-amber-600 animate-spin-slow" style="animation-duration: 40s;"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voucher Meta details -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-semibold text-slate-650 border-b border-slate-150 pb-6 text-right">
+                        <div class="space-y-1">
+                            <span class="text-slate-400 block" id="label-voucher-hash">رقم تأكيد قسيمة النزول الموثق:</span>
+                            <span id="voucher-id-val" class="font-mono text-sm text-slate-900 font-extrabold">BK-2026-9901</span>
+                            
+                            <span class="text-slate-400 block pt-1.5" id="label-voucher-time">تاريخ ووقت إصدار مستند التفويض المباشر:</span>
+                            <span id="voucher-createdat-val" class="text-[11px] font-mono select-none block text-slate-900 leading-none">2026-05-28T08:19:47Z</span>
+                        </div>
+                        <div class="space-y-1 sm:border-r sm:border-slate-150 sm:pr-4">
+                            <span class="text-slate-400 block" id="label-voucher-contact-name">المسافر والنزيل الأساسي:</span>
+                            <span id="voucher-guest-name" class="text-slate-900 font-black">Abdelwahab Adel</span>
+
+                            <span class="text-slate-400 block pt-1" id="label-voucher-contact-email">البريد الإلكتروني للنزيل:</span>
+                            <span id="voucher-guest-email" class="text-[11px] font-mono text-slate-900">abdelwahabadel777@gmail.com</span>
+
+                            <span class="text-slate-400 block pt-1" id="label-voucher-contact-phone">الهاتف:</span>
+                            <span id="voucher-guest-phone" class="font-mono text-slate-900">+971 50 123 4567</span>
+                        </div>
+                    </div>
+
+                    <!-- Estate layout info details -->
+                    <div class="space-y-4 border-b border-slate-150 pb-6 text-right">
+                        <div>
+                            <span class="text-slate-400 text-xs block" id="label-voucher-estate">صرح الضيافة والفندق:</span>
+                            <h4 id="voucher-hotel-name" class="text-slate-900 text-base font-black">Atlantis The Royal</h4>
+                            <p id="voucher-hotel-address" class="text-slate-500 text-xs mt-0.5 font-semibold">Crescent Rd, Palm Jumeirah, Dubai</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                            <div class="p-3 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
+                                <span class="text-slate-450 text-[10px] block font-black" id="label-voucher-room">جناح وغرفة الإقامة:</span>
+                                <span id="voucher-room-type" class="text-slate-800 font-black block text-xs">Signature Panoramic Suite</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
+                                <span class="text-slate-450 text-[10px] block font-black" id="label-voucher-board">الوجبة والامتياز:</span>
+                                <span id="voucher-board-type" class="text-slate-800 font-black block text-xs">Bed & Breakfast</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl space-y-0.5 border border-slate-100">
+                                <span class="text-slate-450 text-[10px] block font-black" id="label-voucher-period">فترة الحجز المعتمدة:</span>
+                                <span id="voucher-booking-dates" class="text-slate-850 font-bold block text-xs">2026-06-15 to 2026-06-20</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total cost -->
+                    <div class="flex justify-between items-center bg-slate-50 p-4 sm:p-6 rounded-2xl border border-slate-100">
+                        <div class="text-right">
+                            <span class="text-[10px] text-slate-450 block font-black" id="label-voucher-sum">مجموع المستخلص المالي المدفوع:</span>
+                            <span id="voucher-total-amount" class="text-indigo-900 font-sans font-black text-2xl sm:text-3xl leading-none">$3250 USD</span>
+                        </div>
+                        <!-- Barcode simulator -->
+                        <div class="flex flex-col items-center gap-1 text-center font-semibold select-none">
+                            <div class="w-36 h-10 bg-gradient-to-r from-slate-900 via-white to-slate-900 flex justify-between px-2 items-stretch" style="background-image: repeating-linear-gradient(90deg, #111 0px, #111 2px, #fff 2px, #fff 4px, #111 4px, #111 5px, #fff 5px, #fff 7px, #111 7px, #111 11px, #fff 11px, #fff 13px, #111 13px, #111 15px);"></div>
+                            <span id="voucher-barcode-label" class="text-[8px] font-mono text-slate-450 uppercase">PASSBK-V2-SEC</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT G: FULLSCREEN IMAGE SHOWCASE GALLERY -->
+    <!-- ============================================== -->
+    <div id="gallery-overlay" class="fixed inset-0 z-[100] bg-slate-950/95 flex flex-col justify-between p-6 select-none hidden">
+        <div class="flex justify-between items-center text-white text-right">
+            <button id="btn-close-gallery" class="p-2 bg-white/10 border border-white/10 hover:bg-white/20 rounded-full cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div>
+                <h4 id="gallery-hotel-title" class="text-sm font-black text-white leading-none">The Palace Downtown Dubai</h4>
+                <span id="gallery-counter-tag" class="text-[10px] text-slate-400 block mt-1">Image 1 of 3</span>
+            </div>
+        </div>
+
+        <!-- Big middle carousel image -->
+        <div class="flex-1 flex items-center justify-between gap-4 max-w-5xl mx-auto w-full relative">
+            <button id="btn-gallery-prev" class="p-3 bg-white/5 border border-white/5 hover:bg-white/10 text-white rounded-full cursor-pointer transition active:scale-90"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
+            <div id="gallery-image-box" class="flex-1 aspect-video rounded-3xl overflow-hidden border border-white/10 bg-black/60 shadow-2xl relative">
+                <img id="gallery-active-img" src="" alt="Active showcase slide" class="w-full h-full object-cover select-none">
+            </div>
+            <button id="btn-gallery-next" class="p-3 bg-white/5 border border-white/5 hover:bg-white/10 text-white rounded-full cursor-pointer transition active:scale-90"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
+        </div>
+
+        <!-- Carousel dot indexes indicator -->
+        <div id="gallery-dots-container" class="flex justify-center gap-2 pb-2">
+            <!-- Dynamic dot structures -->
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT H: IMMERSION SOCIAL SHARE DIALOG BOX -->
+    <!-- ============================================== -->
+    <div id="sharing-dialog" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="w-full max-w-md bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl relative text-right select-none space-y-6">
+                <button id="btn-close-share" class="absolute top-4 left-4 p-2 text-slate-400 hover:text-white cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
+                
+                <div class="text-center space-y-2">
+                    <div class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-505/20 flex items-center justify-center mx-auto mb-1">
+                        <i data-lucide="share-2" class="w-5 h-5 text-amber-500"></i>
+                    </div>
+                    <h3 id="share-title" class="font-sans font-black text-base text-white">مشاركة ركن الضيافة هذا</h3>
+                    <p id="share-sub" class="text-xs text-slate-400 leading-relaxed">انشر هذا الجناح مع عائلتك أو الـ VIP لترتيبات النزول المشترك.</p>
+                </div>
+
+                <div class="space-y-2 text-right">
+                    <label id="label-sharelink" class="text-[10px] font-bold text-slate-450 block">الرابط التفاعلي المؤقت للمشهد</label>
+                    <div class="flex gap-2">
+                        <button id="btn-copy-share-link" class="bg-amber-500 hover:bg-amber-400 text-slate-950 py-2.5 px-4 rounded-xl text-xs font-black shrink-0 active:scale-95 transition cursor-pointer flex items-center gap-1.5 border border-amber-550/20 shadow-md">
+                            <i data-lucide="clipboard" class="w-4 h-4"></i> نسخ الرابط
+                        </button>
+                        <input type="text" id="share-link-input" readonly value="" class="flex-1 rounded-xl p-2.5 text-xs bg-slate-950 border border-slate-850 text-slate-100 font-mono text-center focus:outline-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT I: LUXURY LOGIN/SETUP DIALOG -->
+    <!-- ============================================== -->
+    <div id="login-modal" class="fixed inset-0 z-[100] overflow-y-auto hidden">
+        <div class="min-h-screen bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="w-full max-w-md bg-slate-900 border border-amber-505/15 p-6 sm:p-8 rounded-3xl relative text-right select-none space-y-6">
+                <button id="btn-close-login" class="absolute top-4 left-4 p-2 text-slate-400 hover:text-white cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
+
+                <!-- Icon area -->
+                <div class="text-center space-y-2">
+                    <div class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-505/20 flex items-center justify-center mx-auto mb-1">
+                        <i data-lucide="lock" class="w-5 h-5 text-amber-500"></i>
+                    </div>
+                    <h3 id="login-title-h3" class="font-sans font-black text-xl text-white">بوابة النخبة للنزلاء وملاك المكاتب</h3>
+                    <p id="login-desc-p" class="text-xs text-slate-400 leading-relaxed">افتح الامتيازات الملكية، ونقاط البلاتين، ومحاور الاسترداد الفوري.</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="grid grid-cols-2 gap-2 p-1 rounded-xl bg-slate-950/45 border border-slate-800 font-semibold select-all text-center">
+                    <button id="login-tab-signin" class="py-2 rounded-lg text-xs cursor-pointer bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black">تسجيل الدخول</button>
+                    <button id="login-tab-signup" class="py-2 rounded-lg text-xs cursor-pointer text-slate-400 hover:text-slate-200">إنشاء حساب جديد</button>
+                </div>
+
+                <!-- Login Form component -->
+                <form id="login-auth-form" class="space-y-4 text-right">
+                    <!-- Signup Name block (toggleable) -->
+                    <div id="signup-extra-name-block" class="space-y-1 hidden text-right">
+                        <label id="label-signup-fullname" class="text-[10px] font-bold text-slate-450">الاسم واللقب الكريم</label>
+                        <div class="relative">
+                            <i data-lucide="user" class="w-4 h-4 text-slate-505 absolute top-3.5 right-3.5"></i>
+                            <input type="text" id="login-auth-fullname" placeholder="Abdelwahab Adel" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs bg-slate-950 border border-slate-800 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Email address -->
+                    <div class="space-y-1 text-right">
+                        <label id="label-signup-email" class="text-[10px] font-bold text-slate-450">البريد الإلكتروني المعتمد</label>
+                        <div class="relative">
+                            <i data-lucide="mail" class="w-4 h-4 text-slate-505 absolute top-3.5 right-3.5"></i>
+                            <input type="email" id="login-auth-email" required value="abdelwahabadel777@gmail.com" placeholder="abdelwahabadel777@gmail.com" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs bg-slate-950 border border-slate-800 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Secure lock password -->
+                    <div class="space-y-1 text-right">
+                        <label id="label-signup-password" class="text-[10px] font-bold text-slate-450">كلمة المرور المشفرة</label>
+                        <div class="relative">
+                            <i data-lucide="key" class="w-4 h-4 text-slate-505 absolute top-3.5 right-3.5"></i>
+                            <input type="password" id="login-auth-password" required value="••••••••" placeholder="••••••••" class="w-full pr-10 pl-4 py-3 rounded-xl text-xs bg-slate-950 border border-slate-800 text-slate-100 font-bold focus:ring-1 focus:ring-amber-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit-auth" class="w-full py-3 mt-4 text-xs font-extrabold rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 flex items-center justify-center gap-1.5 shadow-xl shadow-amber-505/10 cursor-pointer active:scale-95 transition">
+                        <i data-lucide="log-in" class="w-4 h-4 text-slate-950"></i>
+                        <span id="label-login-auth-btn-label">إجراء تسجيل المحاكاة الفورية</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT J: INTEGRATED REWARDS EXQUISITE CHATBOT PANEL -->
+    <!-- ============================================== -->
+    <div id="chatbot-widget-container" class="fixed bottom-6 left-6 z-40 select-none">
+        
+        <!-- Open Toggle button bubble -->
+        <button id="chatbot-toggle-btn" class="w-14 h-14 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 rounded-full flex items-center justify-center shadow-2xl relative border border-amber-400/20 active:scale-95 hover:scale-105 transition duration-300 cursor-pointer">
+            <i data-lucide="message-square" class="w-6 h-6 text-slate-950"></i>
+            <span class="absolute top-1 right-1 h-3.5 w-3.5 rounded-full bg-emerald-500 border border-white animate-pulse"></span>
+        </button>
+
+        <!-- Big Expanded layout dialogue element -->
+        <div id="chatbot-main-panel" class="absolute bottom-16 left-0 w-80 sm:w-96 aspect-[3/4] max-h-[80vh] bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl scale-0 transform transition-all duration-300 origin-bottom-left flex flex-col overflow-hidden text-right z-50">
+            <!-- Header bar -->
+            <div class="p-4 bg-slate-950 border-b border-slate-850 flex justify-between items-center sm:px-5">
+                <button id="chatbot-panel-close" class="p-2 hover:bg-slate-850 rounded-full text-slate-400 hover:text-white cursor-pointer"><i data-lucide="x" class="w-4 h-4"></i></button>
+                <div class="flex items-center gap-2.5">
+                    <div class="text-right">
+                        <h4 id="chatbot-name-val" class="text-xs font-black text-white leading-tight">ليلى - المستشار الفندقي الفخم لمنصة النخبة</h4>
+                        <span id="chatbot-title-val" class="text-[9px] text-amber-500 block">مساعد الذكاء الاصطناعي الفندقي</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-550/20 flex items-center justify-center shrink-0">
+                        <i data-lucide="compass" class="w-4 h-4 text-amber-500 animate-spin-slow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll messages area -->
+            <div id="chatbot-messages-box" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/25 flex flex-col">
+                <!-- Dialogue entities injected -->
+            </div>
+
+            <!-- Typing bubble loader simulator -->
+            <div id="chatbot-typing-bubble" class="px-5 py-2 text-xs text-slate-400 font-bold items-center gap-1 bg-slate-950/25 hidden text-right">
+                <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping inline-block"></span>
+                <span id="chatbot-typing-label">ليلى تكتب الآن...</span>
+            </div>
+
+            <!-- Input controller bar -->
+            <form id="chatbot-send-form" class="p-3 border-t border-slate-850 bg-slate-950 flex gap-2">
+                <button type="submit" class="bg-amber-500 text-slate-950 hover:bg-amber-400 p-2.5 rounded-xl cursor-pointer active:scale-95 transition flex items-center justify-center"><i data-lucide="arrow-right" class="w-4 h-4 rotate-180"></i></button>
+                <input type="text" id="chatbot-input-txt" required placeholder="اسأل ليلى عن سياسات الإلغاء، أو أرخ الفنادق في طوكيو ودبي..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 font-bold focus:outline-none focus:ring-1 focus:ring-amber-500 text-right">
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT K: BOTTOM DYNAMIC PLATFORM LOGS LOGGER -->
+    <!-- ============================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-slate-800/80 bg-slate-950/20 text-right select-all">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-850 pb-3 mb-4">
+            <span class="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 px-3 py-1 rounded-full font-mono uppercase" id="logs-duration-rate">Proxy Tracker Latency: 25ms avg</span>
+            <div class="flex items-center gap-2 justify-end">
+                <i data-lucide="radio" class="w-4 h-4 text-emerald-500 animate-pulse"></i>
+                <h4 class="font-sans font-black text-sm text-white" id="logs-panel-title">منصة الرصد وأداء خوادم LiteAPI الفورية واعتلاء الـ Logs</h4>
+            </div>
+        </div>
+
+        <!-- Logs database content list -->
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-850 overflow-hidden font-mono text-[10.5px] leading-relaxed max-h-56 overflow-y-auto space-y-2 text-slate-350" id="platform-logs-container">
+            <!-- Logging list items dynamically populated -->
+        </div>
+    </section>
+
+    <!-- 4. Global Footer -->
+    <footer class="border-t py-12 text-xs font-sans bg-black/65 border-amber-500/15 text-slate-450 shrink-0 select-text">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-right sm:text-start" dir="rtl">
+            <div class="space-y-3 col-span-1 md:col-span-2">
+                <h4 class="font-extrabold text-sm text-amber-500">LITEAPI.TRAVEL ELITE HUB</h4>
+                <p id="footer-logo-desc" class="text-xs leading-relaxed max-w-sm text-slate-400">المنصة النموذجية الفاخرة المعتمدة لحجز وتأمين الغرف الفندقية العالمية بالربط المباشر مع محركات LiteAPI Travel والمستوحاة من كبرى دور الضيافة.</p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="font-extrabold text-[#94a3b8]" id="footer-col-1">روابط التنقل الفورية</h4>
+                <ul class="space-y-1.5 text-slate-400">
+                    <li id="footer-lnk-portal" class="hover:text-amber-400 cursor-pointer">بوابة الاستكشاف</li>
+                    <li id="footer-lnk-member" class="hover:text-amber-400 cursor-pointer">لوحة مكافآت الأعضاء</li>
+                </ul>
+            </div>
+            <div class="space-y-2">
+                <h4 class="font-extrabold text-[#94a3b8]" id="footer-col-2">الأمان والبروتوكول</h4>
+                <ul class="space-y-1.5 text-slate-450 font-mono text-[11px] font-semibold">
+                    <li class="flex items-center gap-1.5 justify-end sm:justify-start">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i>
+                        <span>PCI-DSS Secured</span>
+                    </li>
+                    <li>LiteAPI Standard v2</li>
+                    <li>SHA-256 Mock Sign</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-slate-800/80 max-w-7xl mx-auto mb-6">
+        <div class="text-center px-4 max-w-3xl mx-auto space-y-2 select-text" dir="rtl">
+            <p id="footer-copy-text" class="text-[#e2e8f0]/80">© 2026 بوابة فنادق النخبة العالمية المتكاملة مع LiteAPI Travel API. جميع البيانات والأسعار والمعاملات تصدر مباشرة عبر البروتوكولات المؤمنة المشفرة.</p>
+            <p class="mt-2.5 flex items-center justify-center gap-1.5 text-amber-500/90 font-medium">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500 animate-spin-slow shrink-0" style="animation-duration: 8s;"></i>
+                <span id="footer-seal-text">تمت صياغتها بعناية بتصميم عصري فخم وسرد دقيق للمسارات وسرعة جلب فائقة لبيانات الضيافة.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- COMPONENT L: FLOATING TOAST STACK WRAPPER -->
+    <!-- ============================================== -->
+    <div id="toast-stack" class="fixed bottom-6 right-6 z-[100] max-w-sm flex flex-col gap-3.5">
+        <!-- Toast elements dynamically injected here -->
+    </div>
+
+    <!-- Scroll to Top float bubble button -->
+    <button id="btn-scrolltop" class="fixed bottom-6 right-6 z-40 p-3 bg-amber-500 text-slate-950 hover:bg-amber-450 border border-amber-500/25 rounded-full scale-0 transform transition-transform duration-300 pointer-events-auto cursor-pointer shadow-lg active:scale-95">
+        <i data-lucide="arrow-up" class="w-5 h-5 text-slate-950"></i>
+    </button>
+
+    <!-- Main JS Application Logic -->
+    <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "LiteAPI Travel Platform",
+  "description": "An advanced, high-performance travel and hospitality booking platform fully integrated with the LiteAPI system, featuring a premium customer interface, interactive administrative panels, and secure member dashboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

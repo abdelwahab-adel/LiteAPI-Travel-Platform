@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تفاصيل الصرح الفخم | LITE TRAVEL</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+Arabic:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="responsive.css" />
+</head>
+<body class="bg-slate-950 text-slate-150 page-fade-in py-10 px-4" dir="rtl">
+
+  <div class="max-w-3xl mx-auto space-y-7">
+    
+    <!-- Top Back Navigation -->
+    <div class="flex justify-between items-center bg-[#0b0f19] border border-amber-500/10 p-4.5 rounded-2xl">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-arrow-right text-amber-500"></i>
+        <a href="index.html" class="text-xs font-black text-slate-300 hover:text-white transition-colors">العودة للرئيسية وصروح الضيافة</a>
+      </div>
+      <span class="text-[9px] font-mono text-slate-500">صياغة متفردة</span>
+    </div>
+
+    <!-- Active Hotel Information Card (Loaded dynamically) -->
+    <div id="dynamic-detail-container" class="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
+      
+      <div class="text-center py-20">
+        <i class="fas fa-spinner animate-spin text-amber-500 text-2xl mb-2"></i>
+        <p class="text-xs text-slate-400">جاري استدعاء حزمة الملفات الخاصة بالصرح الفخم...</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="hotels.js"></script>
+  <script src="booking.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hotelId = urlParams.get('id') || 'hotel-royal-atlantis';
+      const hotel = (window.hotelsData || []).find(h => h.id === hotelId);
+
+      const container = document.getElementById('dynamic-detail-container');
+      if (!container) return;
+
+      if (!hotel) {
+        container.innerHTML = `
+          <div class="text-center py-10 space-y-4">
+            <i class="fas fa-exclamation-triangle text-amber-500 text-3xl"></i>
+            <h4 class="font-bold text-base text-white">عذراً، لم نتمكن من العثور على الصرح</h4>
+            <p class="text-xs text-slate-400">يرجى العودة للدليل وإدخال رمز تعريفي صحيح كصفيحة حجز.</p>
+            <a href="index.html" class="inline-block bg-amber-500 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl">رجوع للدليل السكني</a>
+          </div>
+        `;
+        return;
+      }
+
+      // Draw star rating
+      let starsHtml = '';
+      for (let i = 0; i < hotel.stars; i++) {
+        starsHtml += '<i class="fas fa-star text-amber-500 text-xs"></i>';
+      }
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          
+          <div class="space-y-2">
+            <div class="flex items-center gap-1">
+              ${starsHtml}
+              <span class="text-[10px] text-amber-500 font-bold font-mono mr-2">${hotel.rating} / 5</span>
+            </div>
+            <h2 class="font-sans font-black text-2xl text-white leading-normal">${hotel.name}</h2>
+            <p class="text-slate-400 text-xs flex items-center gap-1.5 font-sans"><i class="fas fa-map-marker-alt text-amber-500"></i> ${hotel.address}، ${hotel.city}</p>
+          </div>
+
+          <div class="relative h-64 rounded-2xl overflow-hidden bg-slate-900 border border-slate-850">
+            <img src="${hotel.images[0]}" alt="${hotel.name}" class="w-full h-full object-cover" />
+          </div>
+
+          <div class="space-y-2.5">
+            <h4 class="text-xs font-black text-white uppercase tracking-wider">نبذة تفصيلية:</h4>
+            <p class="text-slate-300 text-xs leading-relaxed font-sans font-light">${hotel.description}</p>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-xs font-black text-white uppercase tracking-wider">التجهيزات المتوفرة بالصرح:</h4>
+            <div class="flex flex-wrap gap-2">
+              ${hotel.amenities.map(am => `
+                <span class="text-[10px] bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300"><i class="fas fa-check text-amber-500 text-[9px] ml-1.5"></i>${am}</span>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Checkout call details mapping back to checkout sheet -->
+          <div class="border-t border-slate-850 pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4.5 bg-[#0b0f19]/35 p-5 rounded-2xl border">
+            <div>
+              <span class="text-[10px] text-slate-500 block leading-none">معدل البداية:</span>
+              <span class="font-sans font-black text-2xl text-white block mt-1.5 leading-none">$${hotel.minPrice} <span class="text-xs font-medium text-slate-500">/ الليلة</span></span>
+            </div>
+            <a href="index.html?openHotel=${hotel.id}" class="w-full sm:w-auto text-center gold-gradient-bg text-slate-950 font-black text-xs px-6 py-3 rounded-xl transition-all hover:scale-103 active:scale-97 cursor-pointer leading-none">تأكيد توفر الأجنحة والحجز الفوري</a>
+          </div>
+
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>

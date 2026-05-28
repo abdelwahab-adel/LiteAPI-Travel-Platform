@@ -1,0 +1,154 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Custom Premium & Glassmorphic variables for the luxury theme */
+:root {
+  --gold-primary: #d97706; /* Noble Amber Gold */
+  --gold-hover: #f59e0b;
+  --gold-glow: rgba(217, 119, 6, 0.15);
+  --dark-bg: #030712; /* Pitch black */
+  --dark-panel: rgba(15, 23, 42, 0.6); /* Translucent charcoal slate */
+  --glass-border: rgba(217, 119, 6, 0.1); /* Subtle gold border */
+  --glass-border-hover: rgba(217, 119, 6, 0.25);
+  --glass-bg: rgba(15, 23, 42, 0.55);
+}
+
+/* Global resets & scroll behaviors */
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: #f1f5f9;
+  overflow-x: hidden;
+  background-image: radial-gradient(ellipse at top, #111827 0%, var(--dark-bg) 65%);
+}
+
+/* Custom Scrollbar for luxurious aesthetics */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(217, 119, 6, 0.2);
+  border-radius: 999px;
+  border: 2px solid var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* Glassmorphism card utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+}
+
+.glass-panel-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 12px 40px 0 rgba(217, 119, 6, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Golden text and gradient text effects */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #fef08a 0%, #d97706 50%, #92400e 105%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 60%, #b45309 100%);
+}
+
+/* Shimmer animations on luxury components */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-anim {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(217,119,6,0.15) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+/* Spin loop for premium icons */
+.spin-slow {
+  animation: spin 35s infinite linear;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Floating animation for elite widgets */
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Sticky Bottom Booking Bar */
+.sticky-book-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 40;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Blur backdrop animation */
+.page-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom calendar dark scheme styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6) sepia(1) saturate(10) hue-rotate(15deg);
+  cursor: pointer;
+}
+
+/* Star rating golden glow */
+.gold-star-glow {
+  filter: drop-shadow(0 0 4px rgba(217, 119, 6, 0.45));
+}
+
+/* Pulse keyframes for live rooms count badge */
+.pulse-emerald {
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}

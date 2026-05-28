@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ar" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LITE TRAVEL | منصة حجز الفنادق والقصور الفاخرة</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Google Fonts: Inter & Arabic Noto Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+Arabic:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Arabic', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom & Responsive Styles sheets -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="responsive.css" />
+</head>
+<body class="page-fade-in text-slate-100" dir="rtl">
+
+  <!-- Toast Notification Stack Container -->
+  <div id="toast-container" class="fixed top-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Transparent Blur Header (Navbar) -->
+  <header class="fixed top-0 left-0 w-full z-40 bg-slate-950/40 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo Premium Gold -->
+      <a href="index.html" class="flex items-center gap-2.5 group cursor-pointer">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 shadow-lg shadow-amber-500/10 group-hover:shadow-amber-500/25 transition-all">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+            <i class="fas fa-crown text-amber-500 text-sm group-hover:scale-110 transition-transform"></i>
+          </div>
+        </div>
+        <div>
+          <span class="text-xs uppercase tracking-widest text-slate-400 block font-mono leading-none">LITE TRAVEL</span>
+          <span class="text-base font-sans font-black tracking-tight mt-0.5 block gold-gradient-text">PLATINUM</span>
+        </div>
+      </a>
+
+      <!-- Navigation links -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-bold text-slate-300">
+        <a href="#hero-section" class="hover:text-amber-500 hover:scale-103 transition-all">الرئيسية</a>
+        <a href="#hotels-display-section" class="hover:text-amber-500 hover:scale-103 transition-all">قصور التوزيع</a>
+        <a href="#special-offers-section" class="hover:text-amber-500 hover:scale-103 transition-all">العروض الملكية</a>
+        <a href="#member-loyalty-section" class="hover:text-amber-500 hover:scale-103 transition-all">الملفات والعضويات</a>
+      </nav>
+
+      <!-- Account login / Action button -->
+      <div class="flex items-center gap-3.5">
+        <a href="#member-loyalty-section" class="hidden sm:inline-flex items-center gap-1.5 font-bold text-xs text-amber-400 hover:text-amber-300 transition-colors">
+          <i class="far fa-user-circle text-sm"></i>
+          <span>حساب المالك والشركاء</span>
+        </a>
+        <button onclick="window.uiModule.showToast('عضوية النخبة مفعلة تلقائياً برحلتك الحالية!', 'info')" class="gold-gradient-bg text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl transition-all hover:scale-103 active:scale-97 cursor-pointer hover:shadow-lg hover:shadow-amber-500/10">
+          انضم للنخبة
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section with Motion Backdrop -->
+  <section id="hero-section" class="relative pt-36 pb-24 md:py-48 flex items-center justify-center overflow-hidden min-h-[85vh]">
+    <!-- Ambient dark cover background photo with scale animation -->
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542314831-236800d1c5d8?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-30 transform scale-103 transition-transform duration-[10s]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40"></div>
+    <div class="absolute top-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none floating-element"></div>
+    
+    <div class="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-7">
+      
+      <!-- Crown Top Tag -->
+      <div class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-450 border border-amber-500/20 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+        <i class="fas fa-award spin-slow"></i>
+        <span>تجربة سفر ممتازة وبدون عمولات مخفية</span>
+      </div>
+
+      <!-- Main Majestic Title -->
+      <h1 class="font-sans font-black text-3xl md:text-5xl lg:text-6xl text-white ml-auto mr-auto max-w-4xl leading-snug md:leading-tight">
+        احجز أفضل محاور الإقامة والقصور بأرقى <span class="gold-gradient-text font-black">الأسعار التنافسية</span>
+      </h1>
+
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-sans font-light">
+        اكتشف معايير الفخامة الخمس نجوم حول العالم، وقارن أفضل أنساق الغرف المتاحة مع حجز فوري مؤمن يحفظ سريتك ويرقى لتوقعاتك.
+      </p>
+
+      <!-- Advanced Embedded Search Form -->
+      <div class="glass-panel p-6 rounded-[2.5rem] mt-10 max-w-4xl mx-auto border-amber-500/15">
+        <form id="search-main-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          
+          <!-- Select Country -->
+          <div class="space-y-1.5 text-right md:border-l border-slate-800/80 pl-3">
+            <label class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">الدولة المستهدفة</label>
+            <div class="relative">
+              <i class="fas fa-globe absolute right-3 top-1/2 -translate-y-1/2 text-amber-500/70 text-xs"></i>
+              <select id="search-country" class="w-full bg-slate-950/90 border border-slate-850 rounded-xl pr-9 pl-3.5 py-3 text-xs font-semibold text-slate-200 outline-none focus:border-amber-500/40 transition-colors appearance-none cursor-pointer">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Select City -->
+          <div class="space-y-1.5 text-right md:border-l border-slate-800/80 pl-3">
+            <label class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">المدينة أو المحيط</label>
+            <div class="relative">
+              <i class="fas fa-map-marker-alt absolute right-3 top-1/2 -translate-y-1/2 text-amber-500/70 text-xs"></i>
+              <select id="search-city" class="w-full bg-slate-950/90 border border-slate-850 rounded-xl pr-9 pl-3.5 py-3 text-xs font-semibold text-slate-200 outline-none focus:border-amber-500/40 transition-colors appearance-none cursor-pointer">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Dates Checkin / Checkout combined -->
+          <div class="space-y-1.5 text-right md:border-l border-slate-800/80 pl-3">
+            <label class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">تاريخ الوصول والمغادرة</label>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="relative">
+                <input type="date" id="search-checkin" class="w-full bg-slate-950/90 border border-slate-850 rounded-xl px-2.5 py-2.5 text-[10.5px] font-mono text-slate-250 outline-none focus:border-amber-500/40 transition-colors" />
+              </div>
+              <div class="relative">
+                <input type="date" id="search-checkout" class="w-full bg-slate-950/90 border border-slate-850 rounded-xl px-2.5 py-2.5 text-[10.5px] font-mono text-slate-250 outline-none focus:border-amber-500/40 transition-colors" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Search Button -->
+          <div class="pt-2 md:pt-0">
+            <button type="submit" class="w-full gold-gradient-bg hover:opacity-90 text-slate-950 font-black text-xs py-3.5 px-6 rounded-xl transition-all transform hover:scale-102 active:scale-98 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10 leading-none">
+              <i class="fas fa-search text-xs"></i>
+              <span>استقصاء التوفر</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Luxury Hotel Collections & Taxonomy Display Section -->
+  <main id="hotels-display-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    
+    <!-- Header visual with totals count badge -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-9">
+      <div>
+        <span class="text-amber-500 text-xs font-bold font-mono tracking-widest uppercase block mb-1">صروح الضيافة الأكثر طلباً</span>
+        <h2 class="font-sans font-black text-2xl md:text-3xl text-white">تصفح دليلك للقصور والفنادق الفاخرة</h2>
+      </div>
+      
+      <!-- Interactive active count metric -->
+      <span id="hotels-count-badge" class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 text-amber-450 px-3.5 py-1.5 rounded-full text-xs font-bold leading-none">
+        جاري حصر الأرقام...
+      </span>
+    </div>
+
+    <!-- Category selector row -->
+    <div class="flex items-center gap-3.5 overflow-x-auto pb-4 mb-8 scrollbar-thin">
+      <button data-category="all" class="cat-tab px-5 py-2.5 rounded-full text-xs font-extrabold cursor-pointer transition-all bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 shadow-xl shadow-amber-500/5 whitespace-nowrap">
+        كافة الصروح المعاصرة
+      </button>
+      <button data-category="luxury" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold cursor-pointer transition-all border border-slate-800 text-slate-400 hover:text-white hover:bg-white/5 whitespace-nowrap">
+        فنادق كبار الشخصيات
+      </button>
+      <button data-category="trending" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold cursor-pointer transition-all border border-slate-800 text-slate-400 hover:text-white hover:bg-white/5 whitespace-nowrap">
+        الأكثر ملاءمة ورواجاً
+      </button>
+      <button data-category="special_offer" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold cursor-pointer transition-all border border-slate-800 text-slate-400 hover:text-white hover:bg-white/5 whitespace-nowrap">
+        العروض الحصرية الخاصة
+      </button>
+      <button data-category="budget" class="cat-tab px-5 py-2.5 rounded-full text-xs font-bold cursor-pointer transition-all border border-slate-800 text-slate-400 hover:text-white hover:bg-white/5 whitespace-nowrap">
+        فنادق اقتصادية ذكية
+      </button>
+    </div>
+
+    <!-- Primary Grid for Dynamic Hotels Cards (Density layout) -->
+    <div id="hotels-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Generated dynamically (Skeletons shown instantly) -->
+    </div>
+
+    <!-- Lazy loading display mechanism -->
+    <div class="flex justify-center mt-12 mb-20">
+      <button id="load-more-btn" class="glass-panel border-slate-800 hover:border-amber-500/30 font-extrabold text-xs py-3.5 px-8 rounded-xl transition-all duration-300 transform hover:scale-103 active:scale-97 cursor-pointer flex items-center justify-center gap-2 hover:bg-slate-900 leading-none">
+        <i class="fas fa-sync-alt text-amber-500 text-xs"></i>
+        <span>عرض المزيد من صروح الضيافة</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Specially curated Royal offers section block -->
+  <section id="special-offers-section" class="relative bg-slate-950 py-16 border-t border-b border-white/5">
+    <div class="absolute inset-0 bg-gradient-to-tr from-slate-950 via-slate-900/30 to-slate-950"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+        
+        <!-- text left panel -->
+        <div class="content lg:col-span-2 space-y-5 text-right">
+          <div class="inline-flex items-center gap-1.5 text-amber-500 text-xs font-black tracking-widest uppercase">
+            <i class="fas fa-crown"></i>
+            <span>مزايا الشركاء والمالكين</span>
+          </div>
+          <h3 class="font-sans font-black text-2xl md:text-3xl text-white leading-normal">ارتقِ لعرش الضيافة مع خدمات الطيران الخاص والياخوت</h3>
+          <p class="text-slate-400 text-xs leading-relaxed font-sans">
+            تتخطى منصتنا حدود الحجز الفندقي المألوف، حيث يتاح لأعضاء النخبة والمالكين حق طلب إدراج رحلات النقل المائي الملكي أو الطائرات الخفيفة المخصصة مباشرة برابط الحجز.
+          </p>
+          <div class="pt-3.5">
+            <button onclick="window.uiModule.showToast('فريق استشارات السفر يتواصل معك فور الحجز التالي لتنسيق النقل الخاص!', 'success')" class="text-xs font-extrabold pb-1.5 border-b-2 border-amber-500 text-amber-400 hover:text-amber-350 transition-colors">
+              اقرأ المزيد عن الإضافة بلاتينوم
+            </button>
+          </div>
+        </div>
+
+        <!-- vector box graphics right panel -->
+        <div class="visual lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-tr from-slate-900 to-slate-950 border border-slate-850 p-6.5 rounded-3xl space-y-3 shadow-lg">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 text-sm">
+              <i class="fas fa-plane"></i>
+            </div>
+            <h4 class="font-bold text-sm text-white">طائرات عابرة خاصة</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">تنقّل بين الجزر والمنتجعات بطائرات هليكوبتر كبار الشخصيات مع هبوط حصري بمدرج القصر.</p>
+          </div>
+
+          <div class="bg-gradient-to-tr from-slate-900 to-slate-950 border border-slate-850 p-6.5 rounded-3xl space-y-3 shadow-lg">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 text-sm">
+              <i class="fas fa-ship"></i>
+            </div>
+            <h4 class="font-bold text-sm text-white">يخوت الإنزال الساحلي</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">مرفأ يخت خاص متاح وتنسيق وجبات على السطح البحري بجدولة ممتدة طوال بقائك.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Member Center Panel Section (Bookings & Favorites list) -->
+  <section id="member-loyalty-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    
+    <!-- User Loyalty Card layout grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Platinum Card column -->
+      <div class="flex flex-col space-y-6">
+        <div class="bg-gradient-to-tr from-slate-950 via-slate-900 to-slate-950 border border-amber-500/20 rounded-3xl p-7 text-white shadow-xl relative overflow-hidden h-60 flex flex-col justify-between">
+          <div class="absolute top-0 right-0 -mr-12 -mt-12 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[9px] uppercase tracking-widest text-slate-400 block font-mono">بطاقة الولاء الفاخرة</span>
+              <span class="text-sm font-sans font-black gold-gradient-text mt-0.5 block">LITE MEMBERSHIP</span>
+            </div>
+            <i class="fas fa-crown text-amber-500 text-xl font-black"></i>
+          </div>
+
+          <div>
+            <div class="text-[10px] text-slate-500 font-mono tracking-widest mb-1">الرقم المرجعي الفاخر</div>
+            <div class="text-sm font-semibold tracking-wider font-mono">VIP-887-PLATINUM</div>
+          </div>
+
+          <div class="flex justify-between items-center border-t border-white/5 pt-4">
+            <div>
+              <span class="text-[9px] text-slate-500 block leading-none">فئة العضوية</span>
+              <span class="text-xs font-bold text-amber-500 block mt-1 leading-none">عضو بلاتينوم مؤبد</span>
+            </div>
+            <div class="text-left">
+              <span class="text-[9px] text-slate-500 block leading-none">الرصيد المكتمل</span>
+              <span class="text-xs font-bold text-white block mt-1 leading-none">$12,450.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static System diagnostics diagnostic panel (Aesthetic premium details) -->
+        <div class="bg-slate-950/40 border border-slate-850 p-6 rounded-2xl">
+          <h4 class="text-xs font-bold text-white mb-3.5 flex items-center gap-2">
+            <i class="fas fa-shield-alt text-amber-500"></i>
+            <span>تأمين الدفع والخصوصية</span>
+          </h4>
+          <p class="text-slate-400 text-xs leading-relaxed font-sans mb-3 font-light">
+            يتم تشفير وتعميم كافة العمليات البنكية مباشرة بنظام التشفير التراكمي العسكري. لا يتم عرض أو إفشاء أي سجلات سياحية لجهات الرصد العامة.
+          </p>
+          <div class="flex items-center gap-1.5 text-[9.5px] font-mono text-emerald-450">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 pulse-emerald"></span>
+            <span>بوابة التشفير مفعلة وآمنة بنسبة 100%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings list & favorite panel tabs -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- switch buttons tab -->
+        <div class="flex border-b border-slate-850">
+          <button id="loyalty-tab-bookings" class="px-5 py-3 border-b-2 border-amber-500 text-amber-400 text-xs font-black cursor-pointer leading-none transition-all">
+            مخطط رحلاتي الفخمة المعتمدة
+          </button>
+          <button id="loyalty-tab-wishlist" class="px-5 py-3 border-b-2 border-transparent text-slate-400 text-xs font-bold cursor-pointer hover:text-white leading-none transition-all">
+            صروح مضافة للمفضلة
+          </button>
+        </div>
+
+        <!-- Bookings container panel -->
+        <div id="loyalty-panel-bookings" class="space-y-4">
+          <div id="my-bookings-container" class="space-y-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Wishlist container panel -->
+        <div id="loyalty-panel-wishlist" class="hidden space-y-4">
+          <div id="my-wishlist-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- High-End Luxury Footer -->
+  <footer class="bg-slate-950 border-t border-white/5 py-16 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8.5 text-right">
+      
+      <!-- Logo column -->
+      <div class="space-y-4 md:col-span-1.5">
+        <div class="flex items-center gap-2">
+          <span class="font-sans font-black text-white text-base tracking-tight gold-gradient-text uppercase">LITE PLATINUM TRAVEL</span>
+        </div>
+        <p class="text-[11px] leading-relaxed text-slate-500 font-sans font-light">
+          صرح السفر والضيافة القيادي المعاصر الأكثر فخامة ونزاهة لعملاء النخبة حول العالم. نوفر لك الوصول الحصري لأرقى الغرف بأوفر الأسعار المضمونة وبشفافية لا تضاهى.
+        </p>
+        <span class="text-[10px] text-slate-600 block font-mono">© 2026 LITE TRAVEL INTERNATIONAL. كافة الحقوق محفوظة للنظام.</span>
+      </div>
+
+      <!-- Links column 1 -->
+      <div class="space-y-3.5">
+        <h5 class="font-extrabold text-sm text-white">الروابط السريعة</h5>
+        <ul class="space-y-2 font-sans font-semibold">
+          <li><a href="#hero-section" class="hover:text-amber-500 transition-colors">شريحة البحث العالمية</a></li>
+          <li><a href="#hotels-display-section" class="hover:text-amber-500 transition-colors">صروح الإقامة الفاخرة</a></li>
+          <li><a href="#member-loyalty-section" class="hover:text-amber-500 transition-colors">لوحة المالك والشركاء</a></li>
+        </ul>
+      </div>
+
+      <!-- Links column 2 -->
+      <div class="space-y-3.5">
+        <h5 class="font-extrabold text-sm text-white">الدعم والاستشارات</h5>
+        <ul class="space-y-2 font-sans font-semibold">
+          <li><a href="#" onclick="alert('اتصل بنا عبر الرقم الملكي الموحد: +971 4 800 VIP'); return false;" class="hover:text-amber-500 transition-colors">الخط الساخن لكبار الشخصيات</a></li>
+          <li><a href="#" onclick="alert('راسل مكتب الاستقصاء: platinum@litetravel.vip'); return false;" class="hover:text-amber-500 transition-colors">طلب شراكة فندقية ممتدة</a></li>
+          <li><a href="#" onclick="alert('مفاتيح الخصوصية مؤمنة بشبكة النخبة.'); return false;" class="hover:text-amber-500 transition-colors">سياسات الخصوصية والأمان</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ==================== OVERLAYS & MODALS ==================== -->
+
+  <!-- A: HOTEL DETAILS MODAL SLIDE OUT OVERLAY -->
+  <div id="hotel-details-modal" class="fixed inset-0 z-50 bg-[#030712]/85 backdrop-blur-md flex justify-end hidden">
+    
+    <!-- Outer glass modal block side panel -->
+    <div class="w-full max-w-2xl bg-[#0b0f19] h-full shadow-2.5xl flex flex-col justify-between overflow-y-auto modal-width-fallback border-r border-[#d97706]/15">
+      
+      <!-- Sticky header of modal -->
+      <div class="px-6 py-5.5 border-b border-slate-850 flex justify-between items-center bg-[#0b0f19]/90 sticky top-0 z-10 backdrop-blur-sm">
+        <div>
+          <span class="text-amber-500 text-[10px] font-mono tracking-widest block uppercase">تفاصيل الصرح</span>
+          <h3 id="details-modal-title" class="font-sans font-black text-lg text-white mt-1">صرح الإقامة المختارة</h3>
+        </div>
+        <button class="close-details-btn p-2 bg-slate-950 hover:bg-slate-900 border border-slate-850 rounded-full cursor-pointer text-slate-400 hover:text-white text-sm transition-all">&times; إغلاق</button>
+      </div>
+
+      <!-- Content body -->
+      <div class="p-6 space-y-6.5 flex-1">
+        
+        <!-- Big Slider Hero Image -->
+        <div class="relative h-64 w-full bg-slate-900 rounded-2xl overflow-hidden shadow-md">
+          <img id="book-summary-hotel-image" class="w-full h-full object-cover" />
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end bg-[#030712]/75 backdrop-blur-md border border-slate-800 p-3.5 rounded-xl">
+            <div class="space-y-1">
+              <div id="details-modal-stars" class="flex space-x-0.5 text-amber-500"></div>
+              <p id="details-modal-location" class="text-xs text-slate-300 font-sans"></p>
+            </div>
+            <span class="text-[9.5px] px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold rounded-lg leading-none">متاح للاستقطاع الآمن</span>
+          </div>
+        </div>
+
+        <!-- Description Paragraph -->
+        <div class="space-y-2">
+          <h4 class="text-sm font-extrabold text-white">نبذة عن هذا الصرح:</h4>
+          <p id="details-modal-description" class="text-slate-300 text-xs leading-relaxed font-sans font-light"></p>
+        </div>
+
+        <!-- Amenities Icons Grid -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-extrabold text-white">تجهيزات ومزايا الصرح:</h4>
+          <div id="details-modal-amenities" class="flex flex-wrap gap-2">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Rates / Rooms detailed list block -->
+        <div class="space-y-4">
+          <h4 class="text-sm font-extrabold text-white">خطة الحجوزات والأجنحة المتاحة:</h4>
+          <div id="details-modal-rates" class="space-y-3.5">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Customer reviews list panel -->
+        <div class="space-y-4 border-t border-slate-850 pt-6">
+          <h4 class="text-sm font-extrabold text-white flex items-center gap-2">
+            <i class="far fa-comments text-amber-500 text-sm"></i>
+            <span>التقييمات وثقة النخبة</span>
+          </h4>
+          <div id="details-modal-reviews" class="space-y-3">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky bottom pricing prompt bar -->
+      <div class="px-6 py-4.5 border-t border-slate-850 sticky-book-bar flex justify-between items-center">
+        <div>
+          <span class="text-[10px] text-slate-500 block leading-none">مستوى الأسعار:</span>
+          <div class="font-sans font-black text-white text-2xl mt-1 leading-none">
+            <span id="details-modal-sticky-price">$0</span>
+            <span class="text-xs font-medium text-slate-500 mr-1">/ ليلة</span>
+          </div>
+        </div>
+        <button class="close-details-btn font-extrabold text-xs py-2.5 px-5 border border-slate-800 rounded-xl cursor-pointer text-slate-350 hover:bg-slate-900 transition-all leading-none">رجوع للدليل</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- B: RESERVATION PROCESS POPUP DIRECT SHEET -->
+  <div id="booking-process-modal" class="fixed inset-0 z-50 bg-[#030712]/90 backdrop-blur-lg flex justify-center items-center p-4 sm:p-6 hidden">
+    
+    <!-- Outer glass modal container bounds -->
+    <div class="w-full max-w-4xl bg-slate-950 border border-amber-500/15 h-[90vh] md:h-auto max-h-[90vh] rounded-[2.5rem] shadow-2.5xl overflow-hidden flex flex-col justify-between">
+      
+      <!-- Top header bar of reservations block -->
+      <div class="px-6 py-5.5 border-b border-white/5 flex justify-between items-center bg-[#080d19]">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-file-invoice-dollar text-amber-500 text-sm"></i>
+          <h3 class="font-sans font-black text-sm text-white">نموذج الاستقطاع والتعاقد الفني</h3>
+        </div>
+        <button class="close-booking-btn p-2 bg-slate-950 hover:bg-slate-900 border border-slate-850 rounded-full cursor-pointer text-slate-400 hover:text-white text-sm transition-all">&times; إلغاء</button>
+      </div>
+
+      <!-- Main core double screen wrapper panel -->
+      <div id="booking-form-screen" class="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col md:flex-row gap-8">
+        
+        <!-- Left half: Personal and Card inputs forms -->
+        <div class="flex-1 space-y-6">
+          <form id="booking-form" class="space-y-4">
+            
+            <div class="space-y-1 text-right">
+              <label class="text-[10.5px] uppercase font-bold text-slate-400">الاسم الثلاثي للراكب الرئيسي</label>
+              <input type="text" id="cust-name" required placeholder="مثال: عبد الرحمن بن فهد الشمّري" class="w-full bg-slate-900/60 border border-slate-850 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-200 outline-none focus:border-amber-500/40 text-right" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-1 text-right">
+                <label class="text-[10.5px] uppercase font-bold text-slate-400">البريد الإلكتروني للثبوتية</label>
+                <input type="email" id="cust-email" required placeholder="name@email.vip" class="w-full bg-slate-900/60 border border-slate-850 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-200 outline-none focus:border-amber-500/40 text-left" />
+              </div>
+              <div class="space-y-1 text-right">
+                <label class="text-[10.5px] uppercase font-bold text-slate-400">رقم الهاتف الجوال للمتابعة</label>
+                <input type="tel" id="cust-phone" required placeholder="+966 500 000 000" class="w-full bg-slate-900/60 border border-slate-850 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-200 outline-none focus:border-amber-500/40 text-left" />
+              </div>
+            </div>
+
+            <div class="space-y-4.5 border-t border-slate-850 pt-5">
+              <h4 class="text-xs font-black text-amber-550 flex items-center gap-1.5 justify-end">
+                <span>تأمين المدفوعات الائتمانية البلاتينية (Visa/MC Secure)</span>
+                <i class="fas fa-lock text-[10px]"></i>
+              </h4>
+
+              <!-- Card Inputs Grid -->
+              <div class="space-y-3 bg-slate-950/50 p-4.5 rounded-2xl border border-slate-850">
+                <div class="space-y-1 text-right">
+                  <label class="text-[10px] uppercase font-bold text-slate-500">رقم البطاقة الائتمانية السري</label>
+                  <input type="text" id="card-num" required maxlength="19" placeholder="4000 1234 5678 9010" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-300 outline-none focus:border-amber-505/40 text-left tracking-widest" />
+                </div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                  <div class="space-y-1 text-right">
+                    <label class="text-[10px] uppercase font-bold text-slate-500">تاريخ الانتهاء</label>
+                    <input type="text" required placeholder="MM/YY" maxlength="5" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-300 outline-none focus:border-amber-505/40 text-center tracking-wider" />
+                  </div>
+                  <div class="space-y-1 text-right">
+                    <label class="text-[10px] uppercase font-bold text-slate-500">رمز الأمان الخلفي (CVV)</label>
+                    <input type="password" required maxlength="3" placeholder="***" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-300 outline-none focus:border-amber-505/40 text-center" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full gold-gradient-bg text-slate-950 font-black text-xs py-3.5 px-6 rounded-xl transition-all transform hover:scale-101 active:scale-99 cursor-pointer leading-none flex items-center justify-center gap-1.5 shadow-xl shadow-amber-500/10">
+              <i class="fas fa-shield-alt text-xs"></i>
+              <span>اعتماد الحجز الآمن</span>
+            </button>
+
+          </form>
+        </div>
+
+        <!-- Right half: Summary invoice panel -->
+        <div class="w-full md:w-80 bg-slate-900/40 border border-slate-850 p-5 rounded-2xl flex flex-col justify-between">
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider block">ملخص الحجز والإنزال المالي:</h4>
+            
+            <div class="flex items-start gap-3">
+              <img id="book-summary-hotel-image" class="w-14 h-14 rounded-xl object-cover border border-slate-800 bg-slate-950/80 shrink-0" />
+              <div>
+                <h5 id="book-summary-hotel-name" class="font-sans font-black text-white text-xs leading-normal">اسم الفندق</h5>
+                <p id="book-summary-hotel-address" class="text-[9.5px] text-slate-500 leading-normal mt-0.5">موقع الفندق</p>
+              </div>
+            </div>
+
+            <div class="space-y-2 border-t border-slate-850 pt-4 text-xs">
+              <div class="flex justify-between items-center text-[10.5px]">
+                <span class="text-slate-450 font-sans">الجناح المختار:</span>
+                <span id="book-summary-room-type" class="text-slate-200 font-bold max-w-44 truncate text-left block font-sans">نوع الغرفة</span>
+              </div>
+              <div class="flex justify-between items-center text-[10.5px]">
+                <span class="text-slate-450 font-sans font-light">بورد الإقامة:</span>
+                <span id="book-summary-board" class="text-slate-400 font-sans">إقامة فقط</span>
+              </div>
+              <div class="flex justify-between items-center text-[11px] font-mono">
+                <span class="text-slate-450">تاريخ الوصول:</span>
+                <span id="book-summary-checkin" class="text-slate-300">2026-05-28</span>
+              </div>
+              <div class="flex justify-between items-center text-[11px] font-mono">
+                <span class="text-slate-450">تاريخ المغادرة:</span>
+                <span id="book-summary-checkout" class="text-slate-300">2026-05-29</span>
+              </div>
+              <div class="flex justify-between items-center text-[10.5px]">
+                <span class="text-slate-450 font-sans">الفترة الزمنية:</span>
+                <span id="book-summary-nights" class="text-amber-500 font-bold">1 ليلة</span>
+              </div>
+            </div>
+
+            <div class="space-y-1.5 border-t border-slate-850 pt-4 text-xs font-mono">
+              <div class="flex justify-between items-center text-[10.5px]">
+                <span class="text-slate-500">معدل الليلة:</span>
+                <span id="book-summary-rate-price" class="text-slate-300">$0</span>
+              </div>
+              <div class="flex justify-between items-center text-[10.5px]">
+                <span class="text-slate-500">حسبة الإقامة:</span>
+                <span id="book-summary-rate-nights-calc" class="text-slate-300">$0 × 1 ليلة</span>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-emerald-450 leading-none py-1">
+                <span>الضرائب الإضافية بلاتينوم:</span>
+                <span class="font-bold">شاملة ومؤمنة بالنظام</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-850 pt-4 flex justify-between items-end mt-4">
+            <div>
+              <span class="text-[9px] text-slate-500 block leading-none">الإجمالي المقتطع:</span>
+              <span id="book-summary-total" class="font-sans font-black text-xl text-white block mt-1 leading-none">$0</span>
+            </div>
+            <i class="fas fa-crown text-amber-500 text-sm"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Success Screening voucher -->
+      <div id="booking-success-screen" class="hidden flex-1 overflow-y-auto p-8 md:p-14 text-center flex flex-col justify-center items-center space-y-6">
+        <div class="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 text-2xl floating-element">
+          <i class="fas fa-check-double"></i>
+        </div>
+
+        <div class="space-y-2 max-w-md mx-auto">
+          <h4 class="font-sans font-black text-xl text-white">تم تصديق الحجز وصياغة العقد الملكي!</h4>
+          <p class="text-slate-400 text-xs leading-relaxed font-sans font-light">
+            مرحباً بك بعالم الرفاهية المعاصر. يتم حالياً إرسال ملف الإثبات البنكي والباركود الفندقي المشفر لبريدك المسجل.
+          </p>
+        </div>
+
+        <!-- Ticket Receipt representation block -->
+        <div class="glass-panel border-emerald-500/10 bg-[#071318]/45 p-6 rounded-2xl w-full max-w-sm text-right space-y-4">
+          <div class="flex justify-between items-center border-b border-white/5 pb-3">
+            <div>
+              <span class="text-[9px] text-slate-500 block leading-none">الرقم المرجعي المشفر للرحلة:</span>
+              <span id="success-ref-id" class="text-sm font-bold font-mono tracking-wider text-amber-400 block mt-1 leading-none">LITE-XXXXX</span>
+            </div>
+            <div class="p-1 px-2.5 bg-emerald-500/20 text-emerald-450 border border-emerald-500/25 rounded-md text-[9px] font-bold">مؤكد ونشط بالصناعة</div>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between items-center text-[10.5px]">
+              <span class="text-slate-450 font-sans">الفندق أو الصرح الفخم:</span>
+              <span id="success-hotel-name" class="text-slate-200 font-extrabold max-w-44 truncate block font-sans">اسم الفندق</span>
+            </div>
+            <div class="flex justify-between items-center text-[10.5px]">
+              <span class="text-slate-450 font-sans">فئة الجناح والوحدة:</span>
+              <span id="success-room" class="text-slate-400 max-w-40 truncate block font-sans">نوع الجناح</span>
+            </div>
+            <div class="flex justify-between items-center text-[11px] font-mono">
+              <span class="text-slate-450">الإجمالي المقتطع:</span>
+              <span id="success-total" class="text-white font-bold">$0</span>
+            </div>
+          </div>
+
+          <div class="text-center pt-3 border-t border-white/5 flex gap-2 justify-center">
+            <button onclick="window.print()" class="font-extrabold text-[10.5px] py-2 px-4 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all cursor-pointer leading-none">
+              <i class="fas fa-print"></i> طباعة العقد
+            </button>
+            <button class="close-booking-btn font-extrabold text-[10.5px] py-2 px-4 rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-all cursor-pointer leading-none">
+              الرجوع للدليل السكني
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Core Static data stores & Scripts hooks  -->
+  <script src="hotels.js"></script>
+  <script src="booking.js"></script>
+  <script src="ui.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
