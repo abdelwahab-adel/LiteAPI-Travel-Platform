@@ -1,105 +1,82 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
+ * Booking Management Module
  */
 
-// Premium Booking Engine Controller - Standalone Client Layer
 (function () {
   'use strict';
 
-  // Get saved bookings from client-side storage
-  function getLocalBookings() {
-    const list = localStorage.getItem('lite_bookings');
-    return list ? JSON.parse(list) : [];
-  }
+  // Bookings Storage
+  let bookingsStore = JSON.parse(localStorage.getItem('lite_bookings') || '[]');
 
-  // Save bookings list to client-side storage
-  function saveLocalBookings(list) {
-    localStorage.setItem('lite_bookings', JSON.stringify(list));
-  }
-
-  // Calculate day difference between two dates
-  function calculateNights(checkInDateStr, checkOutDateStr) {
-    const checkIn = new Date(checkInDateStr);
-    const checkOut = new Date(checkOutDateStr);
-    
-    if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
-      return 1;
-    }
-
-    const differenceMs = checkOut.getTime() - checkIn.getTime();
-    const computedDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
-    return computedDays > 0 ? computedDays : 1;
-  }
-
-  // Process standard reservation creation request
-  function makeNewBooking(formData) {
-    const {
-      hotelId,
-      hotelName,
-      hotelCity,
-      hotelAddress,
-      hotelImage,
-      roomType,
-      nightCount,
-      checkInDate,
-      checkOutDate,
-      guestName,
-      guestEmail,
-      guestPhone,
-      totalPrice,
-      cardBrand,
-      cardNumber
-    } = formData;
-
-    const referenceId = 'LITE-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-    const newReservationObj = {
-      id: referenceId,
-      hotelId,
-      hotelName,
-      hotelCity,
-      hotelAddress,
-      hotelImage,
-      roomType,
-      nightsQuantity: parseInt(nightCount) || 1,
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
-      guestName,
-      guestEmail,
-      guestPhone,
-      priceTotal: parseFloat(totalPrice),
-      cardEnding: cardNumber ? cardNumber.slice(-4) : '4321',
-      cardBrand: cardBrand || 'Visa',
-      createdAt: new Date().toISOString(),
-      status: 'confirmed'
-    };
-
-    const currentReservations = getLocalBookings();
-    currentReservations.unshift(newReservationObj);
-    saveLocalBookings(currentReservations);
-
-    return newReservationObj;
-  }
-
-  // Request cancellation of an existing reservation
-  function cancelReservation(referenceId) {
-    const reservations = getLocalBookings();
-    const targetIndex = reservations.findIndex(r => r.id === referenceId);
-    
-    if (targetIndex === -1) return false;
-
-    // soft cancellaton state in localStorage
-    reservations[targetIndex].status = 'cancelled';
-    saveLocalBookings(reservations);
-    return true;
-  }
-
-  // Export methods to global client scope
+  // Booking Module
   window.bookingModule = {
-    getAllBookings: getLocalBookings,
-    createBooking: makeNewBooking,
-    cancelBooking: cancelReservation,
-    calculateNightsCount: calculateNights
+    calculateNightsCount: function (checkIn, checkOut) {
+      try {
+        const start = new Date(checkIn);
+        const end = new Date(checkOut);
+        const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+        return Math.max(1, nights);
+      } catch (e) {
+        console.error('❌ Error calculating nights:', e);
+        return 1;
+      }
+    },
+
+    createBooking: function (bookingData) {
+      try {
+        const booking = {
+          id: 'LITE-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+          hotelId: bookingData.hotelId,
+          hotelName: bookingData.hotelName,
+          hotelCity: bookingData.hotelCity,
+          hotelAddress: bookingData.hotelAddress,
+          hotelImage: bookingData.hotelImage,
+          roomType: bookingData.roomType,
+          nightsQuantity: bookingData.nightCount,
+          checkIn: bookingData.checkInDate,
+          checkOut: bookingData.checkOutDate,
+          guestName: bookingData.guestName,
+          guestEmail: bookingData.guestEmail,
+          guestPhone: bookingData.guestPhone,
+          priceTotal: bookingData.totalPrice,
+          cardBrand: bookingData.cardBrand,
+          status: 'confirmed',
+          createdAt: new Date().toISOString()
+        };
+
+        bookingsStore.push(booking);
+        localStorage.setItem('lite_bookings', JSON.stringify(bookingsStore));
+
+        console.log('✓ Booking Created:', booking.id);
+        return booking;
+      } catch (e) {
+        console.error('❌ Error creating booking:', e);
+        return null;
+      }
+    },
+
+    getAllBookings: function () {
+      return bookingsStore || [];
+    },
+
+    cancelBooking: function (bookingId) {
+      try {
+        const index = bookingsStore.findIndex(b => b.id === bookingId);
+        if (index === -1) return false;
+
+        bookingsStore[index].status = 'cancelled';
+        localStorage.setItem('lite_bookings', JSON.stringify(bookingsStore));
+
+        console.log('✓ Booking Cancelled:', bookingId);
+        return true;
+      } catch (e) {
+        console.error('❌ Error cancelling booking:', e);
+        return false;
+      }
+    }
   };
 
+  console.log('✓ Booking Module Loaded Successfully');
 })();

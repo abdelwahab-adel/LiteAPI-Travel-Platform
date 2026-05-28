@@ -1,57 +1,91 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
+ * Responsive & Mobile Styles
  */
 
-/* Responsive Adaptations & Custom Touch-Target Overrides */
+/* Mobile-first responsive design */
 
-@media (max-width: 1024px) {
+/* Extra small devices (xs) */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+  
+  header {
+    padding: 12px 16px;
+  }
+  
+  #hero-section {
+    padding-top: 80px !important;
+  }
+  
   .glass-panel {
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+    padding: 16px;
   }
 }
 
-@media (max-width: 768px) {
-  /* Adjust hero typography scaling for fluid readable display */
-  h1 {
-    font-size: 2.2rem !important;
-    line-height: 1.2 !important;
-  }
-  
-  /* Compact filters on mobile for higher density grids */
-  form select, form input {
-    font-size: 13px !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-  }
-  
-  /* Make details modal full-width and scroll easily */
-  .modal-width-fallback {
-    width: 100% !important;
-    max-width: 100% !important;
-    border-radius: 0px !important;
-  }
-  
-  /* Sticky footer button actions on mobile devices */
-  .sticky-book-bar {
-    padding: 12px 16px !important;
+/* Small devices (sm) */
+@media (min-width: 641px) and (max-width: 768px) {
+  #search-main-form {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
-  /* High Density Single Columns */
-  .grid-cols-2 {
-    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+/* Medium and larger */
+@media (min-width: 769px) {
+  #search-main-form {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Tablet landscape */
+@media (max-height: 600px) {
+  header {
+    height: 60px;
   }
   
-  /* Small margins to prevent horizontal overflow */
-  .mobile-px-override {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+  #hero-section {
+    min-height: 60vh;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    color: black;
   }
   
-  /* Standard visual adjustments for cards */
-  .h-56 {
-    height: 190px !important;
+  nav, footer, aside {
+    display: none !important;
+  }
+}
+
+/* Landscape orientation */
+@media (orientation: landscape) and (max-height: 500px) {
+  #hero-section {
+    min-height: auto;
+    padding: 20px 0;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  button, a {
+    padding: 12px 16px;
+    min-height: 44px;
+  }
+  
+  .glass-panel-hover:hover {
+    transform: none;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
